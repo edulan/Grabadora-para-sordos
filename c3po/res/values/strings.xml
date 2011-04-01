@@ -2,4 +2,5 @@
 <resources>
     <string name="hello">Hello World, Grabadora!</string>
     <string name="app_name">C3PO</string>
+    <string name="bye">Bye, Grabadora!</string>
 </resources>

@@ -8,5 +8,12 @@
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
     android:text="@string/hello"
+    android:id="@+id/hello_text"
+    />
+<TextView  
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="@string/bye"
+    android:id="@+id/bye_text"
     />
 </LinearLayout>
