@@ -1,76 +1,67 @@
 package es.alltogether.c3po;
 
-import java.io.IOException;
-
 import android.app.Activity;
-import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class RecordDialog extends Activity {
-	/** Called when the activity is first created. */
 
-	private MediaRecorder recorder = null;
+	private RecordUtility record;
+	private PlayerUtility player;
+
+	private boolean recording = true;
+	private boolean playing = true;
+	private String fileName = Environment.getExternalStorageDirectory()
+			.getAbsolutePath()
+			+ "/audiorecordtest.3gp";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.record);
 
+		record = new RecordUtility(fileName);
+		player = new PlayerUtility(fileName);
 		OnClickListener clicker = new OnClickListener() {
 			public void onClick(View v) {
-				onRecord(recording);
+				record.onRecord(recording);
 				Button recordButton = (Button) findViewById(R.id.recordButton);
 				if (recording) {
-					recordButton.setText(R.string.recording);
+					recordButton.setText(R.string.stopRecording);
 				} else {
-					recordButton.setText(R.string.stoppedRecording);
+					recordButton.setText(R.string.startRecording);
 				}
 				recording = !recording;
 			}
 		};
 		Button recordButton = (Button) findViewById(R.id.recordButton);
 		recordButton.setOnClickListener(clicker);
+		OnClickListener playClicker = new OnClickListener() {
+			public void onClick(View v) {
+				player.onPlay(playing);
+				Button recordButton = (Button) findViewById(R.id.playButton);
+				if (playing) {
+					recordButton.setText(R.string.stopPlaying);
+				} else {
+					recordButton.setText(R.string.startPlaying);
+				}
+				playing = !playing;
+			}
+		};
+		Button playButton = (Button) findViewById(R.id.playButton);
+		playButton.setOnClickListener(playClicker);
 
 	}
 
-	boolean recording = true;
-
-	private void onRecord(boolean start) {
-		if (start) {
-			startRecording();
-		} else {
-			stopRecording();
-		}
+	@Override
+	public void onPause() {
+		super.onPause();
+		record.pauseRecorder();
+		player.pausePlayer();
 	}
 
-	private void startRecording() {
-		recorder = new MediaRecorder();
-		recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-		recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-		String mFileName = Environment.getExternalStorageDirectory()
-				.getAbsolutePath();
-		mFileName += "/audiorecordtest.3gp";
-		recorder.setOutputFile(mFileName);
-		recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-
-		try {
-			recorder.prepare();
-		} catch (IOException e) {
-			Log.e("AudioRecordTest", "prepare() failed");
-		}
-
-		recorder.start();
-	}
-
-	private void stopRecording() {
-		recorder.stop();
-		recorder.release();
-		recorder = null;
-	}
-
+	
 }
