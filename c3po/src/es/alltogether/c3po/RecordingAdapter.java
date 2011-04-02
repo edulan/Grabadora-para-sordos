@@ -49,7 +49,11 @@ public class RecordingAdapter extends ArrayAdapter<Recording> {
 				endDate.setTime(recording.getEndDate());
 				bottomText.setText("Duración: "
 						+ (endDate.getTimeInMillis() - startDate
-								.getTimeInMillis()) / (60 * 1000) + " minutos");
+								.getTimeInMillis())
+						/ (60 * 1000)
+						+ " minutos, "
+						+ (endDate.getTimeInMillis() - startDate
+								.getTimeInMillis()) / 1000 + " segundos");
 			}
 		}
 		return convertView;
