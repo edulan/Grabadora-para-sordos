@@ -2,6 +2,7 @@
 <resources>
 	<string name="hello">Hello World, Grabadora!</string>
 	<string name="app_name">C3PO</string>
+	<string name="subjects_name">Asignaturas</string>
 	<string name="bye">Bye, Grabadora!</string>
 	<string name="recordButton">GRABAR</string>
 	<string name="stopRecording">Parar grabación</string>
@@ -13,5 +14,7 @@
 	<string name="storageSpace">No podemos grabar en la SD</string>
 	<string name="listNoItems">No hay grabaciones para esta clase</string>
 	<string name="deleteRecording">Eliminar grabación</string>
+	<string name="add_subject_label">Crear nueva asignatura</string>
+	<string name="add_subject_shortcut">a</string>
 
 </resources>
