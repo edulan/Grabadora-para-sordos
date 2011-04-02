@@ -7,23 +7,9 @@ import android.util.Log;
 
 public class RecordUtility {
 
-	String path;
-
-	public RecordUtility(String path) {
-		this.path = path;
-	}
-
 	private MediaRecorder recorder = null;
 
-	public void onRecord(boolean start) {
-		if (start) {
-			startRecording();
-		} else {
-			stopRecording();
-		}
-	}
-
-	private void startRecording() {
+	public void startRecording(String path) {
 		recorder = new MediaRecorder();
 		recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 		recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
@@ -39,7 +25,7 @@ public class RecordUtility {
 		recorder.start();
 	}
 
-	private void stopRecording() {
+	public void stopRecording() {
 		recorder.stop();
 		recorder.release();
 		recorder = null;
@@ -52,11 +38,4 @@ public class RecordUtility {
 		}
 	}
 
-	public String getPath() {
-		return path;
-	}
-
-	public void setPath(String path) {
-		this.path = path;
-	}
 }

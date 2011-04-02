@@ -10,4 +10,5 @@
 	<string name="stopPlaying">Parar reprodución</string>
 	<string name="startPlaying">Comenzar reprodución</string>
 	<string name="goRecording">Ir a grabación</string>
+	<string name="storageSpace">No podemos grabar en la SD</string>
 </resources>

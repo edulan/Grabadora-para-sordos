@@ -9,21 +9,7 @@ public class PlayerUtility {
 
 	private MediaPlayer player = new MediaPlayer();;
 
-	String path;
-
-	public PlayerUtility(String path) {
-		this.path = path;
-	}
-
-	public void onPlay(boolean start) {
-		if (start) {
-			startPlaying();
-		} else {
-			stopPlaying();
-		}
-	}
-
-	private void startPlaying() {
+	public void startPlaying(String path) {
 		try {
 			if (player == null) {
 				player = new MediaPlayer();

@@ -1,7 +1,8 @@
 package es.alltogether.c3po;
 
+import java.util.Calendar;
+
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
@@ -9,37 +10,55 @@ import android.os.Environment;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
+import es.alltogether.c3po.models.ClassSession;
 
 public class RecordDialog extends Activity {
 
 	private RecordUtility record;
 	private PlayerUtility player;
+	private String schoolClass;
+	// FIXME cambiame por una clase de colegio
+	private ClassSession classSession;
 
 	private boolean recording = true;
 	private boolean playing = true;
 	public static final String PREFS_NAME = "SHARED_PREFERENCES";
-	private String path = Environment.getExternalStorageDirectory()
-			.getAbsolutePath()
-			+ "/audiorecordtest.3gp";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.record);
-		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-		settings.getString("path", path);
-		record = new RecordUtility(path);
-		player = new PlayerUtility(path);
+		record = new RecordUtility();
+		player = new PlayerUtility();
 		OnClickListener clicker = new OnClickListener() {
 			public void onClick(View v) {
-				record.onRecord(recording);
 				Button recordButton = (Button) findViewById(R.id.recordButton);
 				if (recording) {
+					String path = createNewFilePath();
+					record.startRecording(path);
+					classSession = startClassRecording(path);
 					recordButton.setText(R.string.stopRecording);
 				} else {
+					record.stopRecording();
+					stopClassRecording(classSession);
 					recordButton.setText(R.string.startRecording);
 				}
 				recording = !recording;
+			}
+
+			private void stopClassRecording(ClassSession classSession) {
+				classSession.setEndDate(Calendar.getInstance().getTime());
+				// FIXME PERSIST CLASS SESSION
+			}
+
+			private ClassSession startClassRecording(String path) {
+				ClassSession classSession = new ClassSession();
+				classSession.setStartDate(Calendar.getInstance().getTime());
+				classSession.setSchoolClass("CLASE");
+				// FIXME Meter la clase real
+				classSession.setFile(path);
+				return classSession;
 			}
 		};
 		Button recordButton = (Button) findViewById(R.id.recordButton);
@@ -54,9 +73,28 @@ public class RecordDialog extends Activity {
 
 	}
 
-	public void setPath(String path) {
-		this.path = path;
-		record.setPath(path);
+	public String createNewFilePath() {
+		boolean externalStorageAvailable = false;
+		boolean externalStorageWriteable = false;
+		String state = Environment.getExternalStorageState();
+
+		if (Environment.MEDIA_MOUNTED.equals(state)) {
+			// We can read and write the media
+			externalStorageAvailable = externalStorageWriteable = true;
+			return Environment.getExternalStoragePublicDirectory(
+					Environment.DIRECTORY_MUSIC).getAbsolutePath()
+					+ "/class"
+					+ Calendar.getInstance().getTimeInMillis()
+					+ ".3gp";
+		} else {
+			// We can only read the media
+			externalStorageAvailable = true;
+			externalStorageWriteable = false;
+			Toast.makeText(this, R.string.storageSpace, Toast.LENGTH_LONG)
+					.show();
+			return getFilesDir().getAbsolutePath();
+		}
+
 	}
 
 	@Override
@@ -67,9 +105,9 @@ public class RecordDialog extends Activity {
 	}
 
 	private void play() {
-		player.onPlay(playing);
 		Button playButton = (Button) findViewById(R.id.playButton);
 		if (playing) {
+			player.startPlaying(classSession.getFile());
 			playButton.setText(R.string.stopPlaying);
 			player.getPlayer().setOnCompletionListener(
 					new OnCompletionListener() {
@@ -79,10 +117,18 @@ public class RecordDialog extends Activity {
 						}
 					});
 		} else {
+			player.stopPlaying();
 			playButton.setText(R.string.startPlaying);
 		}
 		playing = !playing;
 	}
 
+	public ClassSession getClassSession() {
+		return classSession;
+	}
+
+	public void setClassSession(ClassSession classSession) {
+		this.classSession = classSession;
+	}
 
 }
