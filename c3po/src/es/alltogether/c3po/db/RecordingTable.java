@@ -27,26 +27,63 @@ public class RecordingTable {
 		return resources;
 	}
 
-	public Recording findById(Long id) throws NoResultException {
-		try {
-			Cursor cursorResources = dbHelper.getReadableDatabase().query(
-					TABLE_NAME, null, Recording._ID + " = ?",
-					new String[] { id.toString() }, null, null, null);
-			return new Recording(cursorResources);
-		} catch (Exception e) {
-			throw new NoResultException();
+	/**
+	 * 
+	 * @param id
+	 * @return The matching recording or null.
+	 */
+	public Recording findById(Long id) {
+		String[] selectionArgs = { id.toString() };
+
+		Cursor cursor = dbHelper.getReadableDatabase().query(TABLE_NAME, null,
+				Recording._ID + " = ?", selectionArgs, null, null, null);
+		if (cursor.getCount() > 0) {
+			return new Recording(cursor);
 		}
+		return null;
 	}
 
-	public void save(Recording resource) {
-		Long id = dbHelper.getWritableDatabase().insertOrThrow(TABLE_NAME,
-				null, resource.getContentValues());
-		resource.setId(id);
+	/**
+	 * 
+	 * @param recording
+	 * @return The number of rows affected.
+	 */
+	public int save(Recording recording) {
+		int count = 0;
+
+		if (recording.isSaved()) {
+			String[] selectionArgs = { recording.getId().toString() };
+			// Create
+			count = dbHelper.getWritableDatabase().update(TABLE_NAME,
+					recording.getContentValues(), Recording._ID + " = ?",
+					selectionArgs);
+		} else {
+			Long id;
+			// Update
+			id = dbHelper.getWritableDatabase().insert(TABLE_NAME, null,
+					recording.getContentValues());
+			if (id != -1) {
+				recording.setId(id);
+				count = 1;
+			}
+		}
+		return count;
 	}
 
-	public void delete(Recording resource) {
-		String where = Recording._ID + " = ?";
-		dbHelper.getWritableDatabase().delete(TABLE_NAME, where,
-				new String[] { resource.getId().toString() });
+	/**
+	 * 
+	 * @param recording
+	 * @return The number of rows affected.
+	 */
+	public int delete(Recording recording) {
+		String[] selectionArgs = { recording.getId().toString() };
+
+		int count = dbHelper.getWritableDatabase().delete(TABLE_NAME,
+				Recording._ID + " = ?", selectionArgs);
+		return count;
+	}
+
+	public void clean() {
+		dbHelper.getWritableDatabase().delete(TABLE_NAME, "1", null);
 	}
 }

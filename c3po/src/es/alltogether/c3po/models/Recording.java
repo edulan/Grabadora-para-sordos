@@ -15,21 +15,21 @@ public class Recording implements BaseColumns {
 	public static final String END_DATE = "end_date";
 	public static final String SESSION_ID = "session_id";
 
-	private Long id;
-	private Date startDate;
-	private Date endDate;
-	private String file;
+	private Long id = new Long(-1);
+	private Date startDate = new Date();
+	private Date endDate = new Date();
+	private String file = new String();
 	private Session session = new Session();
 
-	public Recording(Cursor cursorResources) {
-		setId(cursorResources.getLong(0));
+	public Recording(Cursor cursor) {
+		setId(cursor.getLong(0));
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTimeInMillis(cursorResources.getLong(1));
+		calendar.setTimeInMillis(cursor.getLong(1));
 		setStartDate(calendar.getTime());
-		calendar.setTimeInMillis(cursorResources.getLong(2));
+		calendar.setTimeInMillis(cursor.getLong(2));
 		setEndDate(calendar.getTime());
-		setFile(cursorResources.getString(3));
-		getSession().setId(cursorResources.getLong(4));
+		setFile(cursor.getString(3));
+		getSession().setId(cursor.getLong(4));
 	}
 
 	public ContentValues getContentValues() {
@@ -85,6 +85,10 @@ public class Recording implements BaseColumns {
 
 	public void setSession(Session session) {
 		this.session = session;
+	}
+
+	public boolean isSaved() {
+		return id > 0;
 	}
 
 }

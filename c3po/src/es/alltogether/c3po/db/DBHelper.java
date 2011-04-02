@@ -1,6 +1,5 @@
 package es.alltogether.c3po.db;
 
-import static android.provider.BaseColumns._ID;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -10,7 +9,7 @@ import es.alltogether.c3po.models.Subject;
 
 public class DBHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_NAME = "events.db";
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 3;
 
 	/** Create a helper object for the Events database */
 	public DBHelper(Context ctx) {
@@ -19,23 +18,30 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		db.execSQL("CREATE TABLE " + RecordingTable.TABLE_NAME + " (" + _ID
-				+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + Recording.START_DATE
-				+ " INTEGER NOT NULL, " + Recording.END_DATE
-				+ " INTEGER NOT NULL, " + Recording.FILE + " TEXT NOT NULL, "
-				+ Recording.SESSION_ID + " INTEGER NOT NULL);");
-		db.execSQL("CREATE TABLE " + SessionTable.TABLE_NAME + " (" + _ID
-				+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + Session.DATE
-				+ " INTEGER, " + Session.NAME + " TEXT NOT NULL, "
-				+ Session.SUBJECT_ID + " INTEGER NOT NULL);");
-		db.execSQL("CREATE TABLE " + SubjectTable.TABLE_NAME + " (" + _ID
-				+ " INTEGER PRIMARY KEY AUTOINCREMENT, " + Subject.NAME
-				+ " text not null);");
+		// Recordings
+		db.execSQL("CREATE TABLE " + RecordingTable.TABLE_NAME + " ("
+				+ Recording._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+				+ Recording.START_DATE + " INTEGER NOT NULL, "
+				+ Recording.END_DATE + " INTEGER NOT NULL, " + Recording.FILE
+				+ " TEXT NOT NULL, " + Recording.SESSION_ID
+				+ " INTEGER NOT NULL" + ");");
+		// Sessions
+		db.execSQL("CREATE TABLE " + SessionTable.TABLE_NAME + " ("
+				+ Session._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+				+ Session.DATE + " INTEGER, " + Session.NAME
+				+ " TEXT NOT NULL, " + Session.SUBJECT_ID + " INTEGER NOT NULL"
+				+ ");");
+		// Subjects
+		db.execSQL("CREATE TABLE " + SubjectTable.TABLE_NAME + " ("
+				+ Subject._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+				+ Subject.NAME + " TEXT NOT NULL" + ");");
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		db.execSQL("DROP TABLE IF EXISTS " + "recordings");
+		db.execSQL("DROP TABLE IF EXISTS " + RecordingTable.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + SessionTable.TABLE_NAME);
+		db.execSQL("DROP TABLE IF EXISTS " + SubjectTable.TABLE_NAME);
 		onCreate(db);
 	}
 
