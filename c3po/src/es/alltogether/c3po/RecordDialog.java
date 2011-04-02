@@ -1,6 +1,7 @@
 package es.alltogether.c3po;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
@@ -16,7 +17,8 @@ public class RecordDialog extends Activity {
 
 	private boolean recording = true;
 	private boolean playing = true;
-	private String fileName = Environment.getExternalStorageDirectory()
+	public static final String PREFS_NAME = "SHARED_PREFERENCES";
+	private String path = Environment.getExternalStorageDirectory()
 			.getAbsolutePath()
 			+ "/audiorecordtest.3gp";
 
@@ -24,9 +26,10 @@ public class RecordDialog extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.record);
-
-		record = new RecordUtility(fileName);
-		player = new PlayerUtility(fileName);
+		SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+		settings.getString("path", path);
+		record = new RecordUtility(path);
+		player = new PlayerUtility(path);
 		OnClickListener clicker = new OnClickListener() {
 			public void onClick(View v) {
 				record.onRecord(recording);
@@ -46,17 +49,14 @@ public class RecordDialog extends Activity {
 				play();
 			}
 		};
-		player.getPlayer().setOnCompletionListener(new OnCompletionListener() {
-
-			@Override
-			public void onCompletion(MediaPlayer mp) {
-				//FIXME ERROR CON LA COMPLETITUD
-				play();
-			}
-		});
 		Button playButton = (Button) findViewById(R.id.playButton);
 		playButton.setOnClickListener(playClicker);
 
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+		record.setPath(path);
 	}
 
 	@Override
@@ -71,10 +71,18 @@ public class RecordDialog extends Activity {
 		Button playButton = (Button) findViewById(R.id.playButton);
 		if (playing) {
 			playButton.setText(R.string.stopPlaying);
+			player.getPlayer().setOnCompletionListener(
+					new OnCompletionListener() {
+						@Override
+						public void onCompletion(MediaPlayer mp) {
+							play();
+						}
+					});
 		} else {
 			playButton.setText(R.string.startPlaying);
 		}
 		playing = !playing;
 	}
+
 
 }

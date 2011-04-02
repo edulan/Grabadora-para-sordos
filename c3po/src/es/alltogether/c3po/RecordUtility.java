@@ -3,7 +3,6 @@ package es.alltogether.c3po;
 import java.io.IOException;
 
 import android.media.MediaRecorder;
-import android.media.MediaRecorder.OnInfoListener;
 import android.util.Log;
 
 public class RecordUtility {
@@ -51,5 +50,13 @@ public class RecordUtility {
 			recorder.release();
 			recorder = null;
 		}
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 }
