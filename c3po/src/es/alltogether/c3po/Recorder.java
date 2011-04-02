@@ -17,7 +17,7 @@ public class Recorder extends Activity {
 		goRecording.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(Recorder.this, RecordDialog.class);
+				Intent intent = new Intent(Recorder.this, Subjects.class);
 				startActivity(intent);
 			}
 		});

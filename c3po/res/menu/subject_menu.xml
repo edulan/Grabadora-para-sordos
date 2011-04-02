@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:id="@+id/add_subject"
+		android:icon="@drawable/ic_menu_add"
+		android:title="@string/add_subject_label"
+		android:alphabeticShortcut="@string/add_subject_shortcut"  />
+</menu>
