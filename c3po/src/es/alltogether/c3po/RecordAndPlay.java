@@ -25,7 +25,7 @@ import es.alltogether.c3po.db.RecordingTable;
 import es.alltogether.c3po.models.Recording;
 import es.alltogether.c3po.models.Session;
 
-public class RecordDialog extends Activity {
+public class RecordAndPlay extends Activity {
 
 	private RecordUtility record;
 	private PlayerUtility player;
@@ -63,7 +63,7 @@ public class RecordDialog extends Activity {
 				recording = session.getRecordings().get(position);
 				play(recording);
 				TimeDialog playingDialog = new TimeDialog();
-				alertDialog = playingDialog.createPlayingDialog((RecordDialog) myActivity);
+				alertDialog = playingDialog.createPlayingDialog((RecordAndPlay) myActivity);
 			}
 		});
 
@@ -75,7 +75,7 @@ public class RecordDialog extends Activity {
 				String path = FileUtility.createNewFilePath(myActivity);
 				recording = startClassRecording(path);
 				TimeDialog recordingDialog = new TimeDialog();
-				recordingDialog.createRecordingDialog((RecordDialog) myActivity,
+				recordingDialog.createRecordingDialog((RecordAndPlay) myActivity,
 						recording);
 			}
 		};

@@ -14,20 +14,20 @@ public class TimeDialog {
 	private Handler handler = new Handler();
 	private String endMessage;
 
-	public AlertDialog createPlayingDialog(final RecordDialog myActivity) {
+	public AlertDialog createPlayingDialog(final RecordAndPlay myActivity) {
 		endMessage = "Reproduciendo... ";
 		return createDialog(myActivity, "Reprodución iniciada", endMessage,
 				null);
 	}
 
-	public AlertDialog createRecordingDialog(final RecordDialog myActivity,
+	public AlertDialog createRecordingDialog(final RecordAndPlay myActivity,
 			Recording recording) {
 		endMessage = "Grabando... ";
 		return createDialog(myActivity, "Grabación iniciada", endMessage,
 				recording);
 	}
 
-	public AlertDialog createDialog(final RecordDialog myActivity,
+	public AlertDialog createDialog(final RecordAndPlay myActivity,
 			String initMessage, String endMessage, final Recording recording) {
 		Builder builder = new AlertDialog.Builder(myActivity);
 		builder.setTitle(initMessage);

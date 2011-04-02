@@ -5,15 +5,15 @@ import java.io.File;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.TouchUtils;
 import android.widget.Button;
-import es.alltogether.c3po.RecordDialog;
+import es.alltogether.c3po.RecordAndPlay;
 
 public class RecordDialogTest extends
-		ActivityInstrumentationTestCase2<RecordDialog> {
-	private RecordDialog recordDialog;
+		ActivityInstrumentationTestCase2<RecordAndPlay> {
+	private RecordAndPlay recordDialog;
 	private Button recordButton;
 	
 	public RecordDialogTest() {
-		super("es.alltogether.c3po", RecordDialog.class);
+		super("es.alltogether.c3po", RecordAndPlay.class);
 	}
 
 	@Override
