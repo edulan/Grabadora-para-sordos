@@ -52,4 +52,7 @@ public class Subject implements BaseColumns {
 		this.name = name;
 	}
 
+	public boolean isSaved() {
+		return id > 0;
+	}
 }

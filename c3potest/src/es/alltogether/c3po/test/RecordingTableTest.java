@@ -8,12 +8,12 @@ import es.alltogether.c3po.db.RecordingTable;
 import es.alltogether.c3po.models.Recording;
 import es.alltogether.c3po.models.Session;
 
-public class RecorderDBTest extends ActivityInstrumentationTestCase2<Recorder> {
+public class RecordingTableTest extends ActivityInstrumentationTestCase2<Recorder> {
 	// Views
 	private Recorder recorderActivity;
 	private RecordingTable recordingTable;
 
-	public RecorderDBTest() {
+	public RecordingTableTest() {
 		super("es.alltogether.c3po", Recorder.class);
 	}
 
