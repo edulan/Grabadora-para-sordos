@@ -19,7 +19,7 @@ public class SessionTable {
 
 	public List<Session> findByCriteria(String where) {
 		Cursor cursorSessions = dbHelper.getReadableDatabase().query(
-				TABLE_NAME, null, null, null, null, null, null);
+				TABLE_NAME, null, where, null, null, null, null);
 		List<Session> sessions = new ArrayList<Session>();
 		while (cursorSessions.moveToNext()) {
 			sessions.add(new Session(cursorSessions));

@@ -19,7 +19,7 @@ public class SubjectTable {
 
 	public List<Subject> findByCriteria(String where) {
 		Cursor cursorSubjects = dbHelper.getReadableDatabase().query(
-				TABLE_NAME, null, null, null, null, null, null);
+				TABLE_NAME, null, where, null, null, null, null);
 		List<Subject> Subjects = new ArrayList<Subject>();
 		while (cursorSubjects.moveToNext()) {
 			Subjects.add(new Subject(cursorSubjects));
