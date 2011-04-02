@@ -1,9 +1,8 @@
-package es.alltogether.c3po;
+package es.alltogether.c3p0.utilities;
 
 import java.io.IOException;
 
 import android.media.MediaRecorder;
-import android.media.MediaRecorder.OnInfoListener;
 import android.util.Log;
 
 public class RecordUtility {

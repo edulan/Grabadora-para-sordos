@@ -4,9 +4,6 @@
 	<Button android:layout_width="fill_parent" android:id="@+id/recordButton"
 		android:layout_height="wrap_content" android:text="@string/recordButton">
 	</Button>
-	<Button android:layout_width="fill_parent" android:id="@+id/playButton"
-		android:layout_height="wrap_content" android:text="@string/playButton">
-	</Button>
 	<ListView android:id="@+id/listViewRecord"
 		android:layout_width="fill_parent" android:layout_height="fill_parent" />
 </LinearLayout>

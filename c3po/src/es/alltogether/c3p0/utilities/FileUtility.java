@@ -1,21 +1,18 @@
-package es.alltogether.c3po;
+package es.alltogether.c3p0.utilities;
 
 import java.util.Calendar;
 
 import android.content.Context;
 import android.os.Environment;
 import android.widget.Toast;
+import es.alltogether.c3po.R;
 
 public class FileUtility {
 
 	public static String createNewFilePath(Context ctx) {
-		boolean externalStorageAvailable = false;
-		boolean externalStorageWriteable = false;
 		String state = Environment.getExternalStorageState();
 
 		if (Environment.MEDIA_MOUNTED.equals(state)) {
-			// We can read and write the media
-			externalStorageAvailable = externalStorageWriteable = true;
 			// Environment.getExternalStoragePublicDirectory
 			return ctx.getExternalFilesDir(Environment.DIRECTORY_MUSIC)
 					.getAbsolutePath()
@@ -23,9 +20,6 @@ public class FileUtility {
 					+ Calendar.getInstance().getTimeInMillis()
 					+ ".3gp";
 		} else {
-			// We can only read the media
-			externalStorageAvailable = true;
-			externalStorageWriteable = false;
 			Toast.makeText(ctx, R.string.storageSpace, Toast.LENGTH_LONG)
 					.show();
 			return ctx.getFilesDir().getAbsolutePath();

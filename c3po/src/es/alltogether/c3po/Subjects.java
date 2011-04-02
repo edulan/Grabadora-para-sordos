@@ -70,7 +70,7 @@ public class Subjects extends Activity implements OnItemClickListener {
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 			long arg3) {
 		// TODO: Create session activity and pass current subject.
-		Intent intent = new Intent(Subjects.this, RecordDialog.class);
+		Intent intent = new Intent(Subjects.this, RecordAndPlay.class);
 		startActivity(intent);
 	}
 }
