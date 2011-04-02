@@ -4,13 +4,9 @@ import java.util.Calendar;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.SystemClock;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,6 +18,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
+import es.alltogether.c3p0.utilities.FileUtility;
+import es.alltogether.c3p0.utilities.PlayerUtility;
+import es.alltogether.c3p0.utilities.RecordUtility;
 import es.alltogether.c3po.db.RecordingTable;
 import es.alltogether.c3po.models.Recording;
 import es.alltogether.c3po.models.Session;
@@ -30,17 +29,10 @@ public class RecordDialog extends Activity {
 
 	private RecordUtility record;
 	private PlayerUtility player;
-	private Session session;
-	private Recording recording;
 	private RecordingTable recordingTable;
 	private RecordingAdapter adapter;
-	private Handler handler = new Handler();
-
-	private boolean statePlaying = true;
-	public static final String PREFS_NAME = "SHARED_PREFERENCES";
-	private long startTime;
-
-	private ListView listView;
+	private Session session;
+	private Recording recording;
 	private AlertDialog alertDialog;
 
 	@Override
@@ -51,14 +43,15 @@ public class RecordDialog extends Activity {
 		record = new RecordUtility();
 		player = new PlayerUtility();
 		recordingTable = new RecordingTable(this);
+		final Activity myActivity = this;
 
 		// FIXME PASAME LA SESION
 		session = new Session();
 		session.setDate(Calendar.getInstance().getTime());
 		session.setId(1l);
 		session.setName("CLASE");
-
-		listView = (ListView) findViewById(R.id.listViewRecord);
+		
+		ListView listView = (ListView) findViewById(R.id.listViewRecord);
 		adapter = new RecordingAdapter(this, R.layout.row, session
 				.getRecordings());
 		listView.setAdapter(adapter);
@@ -68,98 +61,57 @@ public class RecordDialog extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
 				recording = session.getRecordings().get(position);
-				play();
+				play(recording);
+				TimeDialog playingDialog = new TimeDialog();
+				alertDialog = playingDialog.createPlayingDialog((RecordDialog) myActivity);
 			}
 		});
-		final Activity myActivity = this;
+
 		registerForContextMenu(listView);
 
 		OnClickListener clicker = new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				String path = FileUtility.createNewFilePath(myActivity);
-				record.startRecording(path);
 				recording = startClassRecording(path);
-				createDialog(myActivity);
+				TimeDialog recordingDialog = new TimeDialog();
+				recordingDialog.createRecordingDialog((RecordDialog) myActivity,
+						recording);
 			}
-
-			private void createDialog(final Activity myActivity) {
-				Builder builder = new AlertDialog.Builder(myActivity);
-				builder.setTitle("Grabación iniciada");
-				builder.setMessage("Grabando... ");
-				builder.setPositiveButton("Terminar",
-						new AlertDialog.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog,
-									int which) {
-								handler.removeCallbacks(updateTimeTask);
-								startTime = 0;
-								record.stopRecording();
-								stopClassRecording(recording);
-								adapter.notifyDataSetChanged();
-							}
-						});
-				alertDialog = builder.create();
-				if (startTime == 0L) {
-					startTime = System.currentTimeMillis();
-					handler.removeCallbacks(updateTimeTask);
-					handler.postDelayed(updateTimeTask, 100);
-				}
-				alertDialog.show();
-			}
-
-			private void stopClassRecording(Recording recording) {
-				recording.setEndDate(Calendar.getInstance().getTime());
-				recordingTable.save(recording);
-			}
-
-			private Recording startClassRecording(String path) {
-				Recording classSession = new Recording();
-				classSession.setStartDate(Calendar.getInstance().getTime());
-				classSession.setSession(session);
-				classSession.setFile(path);
-				return classSession;
-			}
-
 		};
 		Button recordButton = (Button) findViewById(R.id.recordButton);
 		recordButton.setOnClickListener(clicker);
-		OnClickListener playClicker = new OnClickListener() {
+	}
+
+	public void stopClassRecording(Recording recording) {
+		record.stopRecording();
+		recording.setEndDate(Calendar.getInstance().getTime());
+		recordingTable.save(recording);
+		adapter.notifyDataSetChanged();
+	}
+
+	private Recording startClassRecording(String path) {
+		record.startRecording(path);
+		Recording classSession = new Recording();
+		classSession.setStartDate(Calendar.getInstance().getTime());
+		classSession.setSession(session);
+		classSession.setFile(path);
+		return classSession;
+	}
+
+	public void play(final Recording recording) {
+		player.startPlaying(recording.getFile());
+		player.getPlayer().setOnCompletionListener(new OnCompletionListener() {
 			@Override
-			public void onClick(View v) {
-				play();
+			public void onCompletion(MediaPlayer mp) {
+				stop();
+				alertDialog.hide();
 			}
-		};
-		Button playButton = (Button) findViewById(R.id.playButton);
-		playButton.setOnClickListener(playClicker);
-
+		});
 	}
 
-	@Override
-	public void onPause() {
-		super.onPause();
-		// record.pauseRecorder();
-		player.pausePlayer();
-	}
-
-	private void play() {
-		Button playButton = (Button) findViewById(R.id.playButton);
-		if (statePlaying) {
-			player.startPlaying(recording.getFile());
-			playButton.setText(R.string.stopPlaying);
-			player.getPlayer().setOnCompletionListener(
-					new OnCompletionListener() {
-						@Override
-						public void onCompletion(MediaPlayer mp) {
-							play();
-						}
-					});
-		} else {
-			player.stopPlaying();
-			playButton.setText(R.string.startPlaying);
-		}
-		statePlaying = !statePlaying;
+	public void stop() {
+		player.stopPlaying();
 	}
 
 	@Override
@@ -190,22 +142,10 @@ public class RecordDialog extends Activity {
 		this.recording = classSession;
 	}
 
-	private Runnable updateTimeTask = new Runnable() {
-		public void run() {
-			final long start = startTime;
-			long millis = System.currentTimeMillis() - start;
-			int seconds = (int) (millis / 1000);
-			int minutes = seconds / 60;
-			seconds = seconds % 60;
-			if (seconds < 10) {
-				alertDialog
-						.setMessage("Grabando..." + minutes + ":0" + seconds);
-			} else {
-				alertDialog.setMessage("Grabando..." + minutes + ":" + seconds);
-			}
-
-			handler.postAtTime(this, SystemClock.uptimeMillis() + 500);
-		}
-	};
+	@Override
+	public void onPause() {
+		super.onPause();
+		// record.pauseRecorder();
+	}
 
 }

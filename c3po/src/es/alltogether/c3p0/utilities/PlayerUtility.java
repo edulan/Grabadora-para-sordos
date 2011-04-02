@@ -1,4 +1,4 @@
-package es.alltogether.c3po;
+package es.alltogether.c3p0.utilities;
 
 import java.io.IOException;
 
@@ -32,8 +32,10 @@ public class PlayerUtility {
 	}
 
 	public void stopPlaying() {
-		player.release();
-		player = null;
+		if (player != null) {
+			player.release();
+			player = null;
+		}
 	}
 
 	public void pausePlayer() {
