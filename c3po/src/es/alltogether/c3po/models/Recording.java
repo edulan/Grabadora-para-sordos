@@ -85,6 +85,7 @@ public class Recording implements BaseColumns {
 
 	public void setSession(Session session) {
 		this.session = session;
+		session.getRecordings().add(this);
 	}
 
 	public boolean isSaved() {
