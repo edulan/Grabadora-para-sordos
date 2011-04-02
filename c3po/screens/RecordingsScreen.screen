@@ -1,64 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
-  <widgets xsi:type="model:Panel" x="24" y="16" width="320" height="480" measuredWidth="320" measuredHeight="480" background="#0567aa" border="none"/>
-  <widgets xsi:type="model:WidgetGroup" x="24" y="16" measuredWidth="320" measuredHeight="25">
-    <widgets xsi:type="model:Panel" width="320" height="25" measuredWidth="320" measuredHeight="25" border="none"/>
-    <widgets xsi:type="model:Label" x="245" width="75" text="8:30 PM" measuredWidth="75" measuredHeight="23" textAlignment="Right">
-      <font bold="true"/>
+  <widgets xsi:type="model:WidgetGroup" x="24" y="16" measuredWidth="320" measuredHeight="480">
+    <widgets xsi:type="model:Panel" width="320" height="480" measuredWidth="320" measuredHeight="480" background="#0567aa" border="none"/>
+    <widgets xsi:type="model:WidgetGroup" measuredWidth="320" measuredHeight="25">
+      <widgets xsi:type="model:Panel" width="320" height="25" measuredWidth="320" measuredHeight="25" border="none"/>
+      <widgets xsi:type="model:Label" x="245" width="75" text="8:30 PM" measuredWidth="75" measuredHeight="23" textAlignment="Right">
+        <font bold="true"/>
+      </widgets>
+      <widgets xsi:type="model:Icon" x="229" y="4" measuredWidth="16" measuredHeight="16" icon="battery (small)"/>
+      <widgets xsi:type="model:Icon" x="206" y="4" measuredWidth="16" measuredHeight="16" icon="signal (small)"/>
     </widgets>
-    <widgets xsi:type="model:Icon" x="229" y="4" measuredWidth="16" measuredHeight="16" icon="battery (small)"/>
-    <widgets xsi:type="model:Icon" x="206" y="4" measuredWidth="16" measuredHeight="16" icon="signal (small)"/>
-  </widgets>
-  <widgets xsi:type="model:Panel" x="24" y="40" width="320" height="456" measuredWidth="320" measuredHeight="456" background="#181818" border="none"/>
-  <widgets xsi:type="model:WidgetGroup" x="24" y="40" measuredWidth="320" measuredHeight="25">
-    <widgets xsi:type="model:Panel" width="320" height="25" measuredWidth="320" measuredHeight="25" background="#7d7f7d" border="none"/>
-    <widgets xsi:type="model:Label" x="8" width="312" text="Sesiones" measuredWidth="312" measuredHeight="23" foreground="#ffffff">
-      <font bold="true"/>
+    <widgets xsi:type="model:Panel" y="24" width="320" height="456" measuredWidth="320" measuredHeight="456" background="#181818" border="none"/>
+    <widgets xsi:type="model:WidgetGroup" y="24" measuredWidth="320" measuredHeight="25">
+      <widgets xsi:type="model:Panel" width="320" height="25" measuredWidth="320" measuredHeight="25" background="#7d7f7d" border="none"/>
+      <widgets xsi:type="model:Label" x="8" width="312" text="Sesiones" measuredWidth="312" measuredHeight="23" foreground="#ffffff">
+        <font bold="true"/>
+      </widgets>
     </widgets>
-  </widgets>
-  <widgets xsi:type="model:Panel" x="24" y="424" width="320" height="71" measuredWidth="320" measuredHeight="71" background="#f2f7fb" foreground="#626262"/>
-  <widgets xsi:type="model:Icon" x="178" y="432" measuredWidth="32" measuredHeight="32" icon="microphone (large)"/>
-  <widgets xsi:type="model:Label" x="121" y="465" width="145" text="Nueva sesión" measuredWidth="145" measuredHeight="23" textAlignment="Center">
-    <font/>
-  </widgets>
-  <widgets xsi:type="model:WidgetGroup" x="51" y="76" measuredWidth="264" measuredHeight="58">
-    <widgets xsi:type="model:HLine" y="52" width="264" measuredWidth="264" measuredHeight="6" foreground="#adaaad"/>
-    <widgets xsi:type="model:Label" width="237" text="Sesión001" measuredWidth="237" measuredHeight="28" foreground="#ffffff">
-      <font size="11" bold="true"/>
-    </widgets>
-    <widgets xsi:type="model:Label" x="2" y="23" text="12min 30s" measuredWidth="58" measuredHeight="23" foreground="#999999">
+    <widgets xsi:type="model:Panel" y="408" width="320" height="71" measuredWidth="320" measuredHeight="71" background="#f2f7fb" foreground="#626262"/>
+    <widgets xsi:type="model:Icon" x="154" y="416" measuredWidth="32" measuredHeight="32" icon="microphone (large)"/>
+    <widgets xsi:type="model:Label" x="97" y="449" width="145" text="Nueva sesión" measuredWidth="145" measuredHeight="23" textAlignment="Center">
       <font/>
     </widgets>
-  </widgets>
-  <widgets xsi:type="model:WidgetGroup" x="51" y="133" measuredWidth="264" measuredHeight="58">
-    <widgets xsi:type="model:HLine" y="52" width="264" measuredWidth="264" measuredHeight="6" foreground="#adaaad"/>
-    <widgets xsi:type="model:Label" width="237" text="Sesión002" measuredWidth="237" measuredHeight="28" foreground="#ffffff">
-      <font size="11" bold="true"/>
+    <widgets xsi:type="model:WidgetGroup" x="27" y="60" measuredWidth="264" measuredHeight="58">
+      <widgets xsi:type="model:HLine" y="52" width="264" measuredWidth="264" measuredHeight="6" foreground="#adaaad"/>
+      <widgets xsi:type="model:Label" width="237" text="Sesión001" measuredWidth="237" measuredHeight="28" foreground="#ffffff">
+        <font size="11" bold="true"/>
+      </widgets>
+      <widgets xsi:type="model:Label" x="2" y="23" text="12min 30s" measuredWidth="58" measuredHeight="23" foreground="#999999">
+        <font/>
+      </widgets>
     </widgets>
-    <widgets xsi:type="model:Label" x="2" y="23" text="12min 30s" measuredWidth="58" measuredHeight="23" foreground="#999999">
-      <font/>
+    <widgets xsi:type="model:WidgetGroup" x="27" y="117" measuredWidth="264" measuredHeight="58">
+      <widgets xsi:type="model:HLine" y="52" width="264" measuredWidth="264" measuredHeight="6" foreground="#adaaad"/>
+      <widgets xsi:type="model:Label" width="237" text="Sesión002" measuredWidth="237" measuredHeight="28" foreground="#ffffff">
+        <font size="11" bold="true"/>
+      </widgets>
+      <widgets xsi:type="model:Label" x="2" y="23" text="12min 30s" measuredWidth="58" measuredHeight="23" foreground="#999999">
+        <font/>
+      </widgets>
     </widgets>
-  </widgets>
-  <widgets xsi:type="model:WidgetGroup" x="51" y="190" measuredWidth="264" measuredHeight="58">
-    <widgets xsi:type="model:HLine" y="52" width="264" measuredWidth="264" measuredHeight="6" foreground="#adaaad"/>
-    <widgets xsi:type="model:Label" width="237" text="Sesión003" measuredWidth="237" measuredHeight="28" foreground="#ffffff">
-      <font size="11" bold="true"/>
+    <widgets xsi:type="model:WidgetGroup" x="27" y="174" measuredWidth="264" measuredHeight="58">
+      <widgets xsi:type="model:HLine" y="52" width="264" measuredWidth="264" measuredHeight="6" foreground="#adaaad"/>
+      <widgets xsi:type="model:Label" width="237" text="Sesión003" measuredWidth="237" measuredHeight="28" foreground="#ffffff">
+        <font size="11" bold="true"/>
+      </widgets>
+      <widgets xsi:type="model:Label" x="2" y="23" text="12min 30s" measuredWidth="58" measuredHeight="23" foreground="#999999">
+        <font/>
+      </widgets>
     </widgets>
-    <widgets xsi:type="model:Label" x="2" y="23" text="12min 30s" measuredWidth="58" measuredHeight="23" foreground="#999999">
-      <font/>
-    </widgets>
-  </widgets>
-  <widgets xsi:type="model:WidgetGroup" x="51" y="145" measuredWidth="262" measuredHeight="180">
-    <widgets xsi:type="model:Panel" width="262" height="180" measuredWidth="262" measuredHeight="180" background="#424542" alpha="192" foreground="#ffffff" border="solid-rounded"/>
-    <widgets xsi:type="model:HLine" x="8" y="123" width="242" measuredWidth="242" measuredHeight="6" foreground="#ffffff"/>
-    <widgets xsi:type="model:Label" x="8" y="10" width="242" text="Grabación iniciada" measuredWidth="242" measuredHeight="33" textAlignment="Center" foreground="#ffffff">
-      <font size="14" bold="true"/>
-    </widgets>
-    <widgets xsi:type="model:Text" x="8" y="52" width="242" height="39" text="01:10" measuredWidth="242" measuredHeight="39" textAlignment="Center" foreground="#ffffff">
-      <font size="24" bold="false"/>
-    </widgets>
-    <widgets xsi:type="model:Label" x="10" y="137" width="240" text="Cancelar" measuredWidth="240" measuredHeight="29" textAlignment="Center" foreground="#eeeeee">
-      <font size="12"/>
+    <widgets xsi:type="model:WidgetGroup" x="27" y="129" measuredWidth="262" measuredHeight="180">
+      <widgets xsi:type="model:Panel" width="262" height="180" measuredWidth="262" measuredHeight="180" background="#424542" alpha="192" foreground="#ffffff" border="solid-rounded"/>
+      <widgets xsi:type="model:HLine" x="8" y="123" width="242" measuredWidth="242" measuredHeight="6" foreground="#ffffff"/>
+      <widgets xsi:type="model:Label" x="8" y="10" width="242" text="Grabación iniciada" measuredWidth="242" measuredHeight="33" textAlignment="Center" foreground="#ffffff">
+        <font size="14" bold="true"/>
+      </widgets>
+      <widgets xsi:type="model:Text" x="8" y="52" width="242" height="39" text="01:10" measuredWidth="242" measuredHeight="39" textAlignment="Center" foreground="#ffffff">
+        <font size="24" bold="false"/>
+      </widgets>
+      <widgets xsi:type="model:Label" x="10" y="137" width="240" text="Cancelar" measuredWidth="240" measuredHeight="29" textAlignment="Center" foreground="#eeeeee">
+        <font size="12"/>
+      </widgets>
     </widgets>
   </widgets>
   <hRuler/>

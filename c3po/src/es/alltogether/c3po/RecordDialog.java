@@ -11,15 +11,17 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
-import es.alltogether.c3po.models.ClassSession;
+import es.alltogether.c3po.db.RecordingTable;
+import es.alltogether.c3po.models.Recording;
+import es.alltogether.c3po.models.Session;
 
 public class RecordDialog extends Activity {
 
 	private RecordUtility record;
 	private PlayerUtility player;
-	private String schoolClass;
-	// FIXME cambiame por una clase de colegio
-	private ClassSession classSession;
+	private Session session;
+	private Recording classSession;
+	private RecordingTable recordingTable;
 
 	private boolean recording = true;
 	private boolean playing = true;
@@ -31,7 +33,9 @@ public class RecordDialog extends Activity {
 		setContentView(R.layout.record);
 		record = new RecordUtility();
 		player = new PlayerUtility();
+		recordingTable = new RecordingTable(this);
 		OnClickListener clicker = new OnClickListener() {
+			@Override
 			public void onClick(View v) {
 				Button recordButton = (Button) findViewById(R.id.recordButton);
 				if (recording) {
@@ -47,16 +51,15 @@ public class RecordDialog extends Activity {
 				recording = !recording;
 			}
 
-			private void stopClassRecording(ClassSession classSession) {
-				classSession.setEndDate(Calendar.getInstance().getTime());
-				// FIXME PERSIST CLASS SESSION
+			private void stopClassRecording(Recording recording) {
+				recording.setEndDate(Calendar.getInstance().getTime());
+				recordingTable.save(recording);
 			}
 
-			private ClassSession startClassRecording(String path) {
-				ClassSession classSession = new ClassSession();
+			private Recording startClassRecording(String path) {
+				Recording classSession = new Recording();
 				classSession.setStartDate(Calendar.getInstance().getTime());
-				classSession.setSchoolClass("CLASE");
-				// FIXME Meter la clase real
+				classSession.setSession(session);
 				classSession.setFile(path);
 				return classSession;
 			}
@@ -64,6 +67,7 @@ public class RecordDialog extends Activity {
 		Button recordButton = (Button) findViewById(R.id.recordButton);
 		recordButton.setOnClickListener(clicker);
 		OnClickListener playClicker = new OnClickListener() {
+			@Override
 			public void onClick(View v) {
 				play();
 			}
@@ -123,11 +127,11 @@ public class RecordDialog extends Activity {
 		playing = !playing;
 	}
 
-	public ClassSession getClassSession() {
+	public Recording getClassSession() {
 		return classSession;
 	}
 
-	public void setClassSession(ClassSession classSession) {
+	public void setClassSession(Recording classSession) {
 		this.classSession = classSession;
 	}
 
