@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, Grabadora!</string>
-    <string name="app_name">C3PO</string>
-    <string name="bye">Bye, Grabadora!</string>
+	<string name="hello">Hello World, Grabadora!</string>
+	<string name="app_name">C3PO</string>
+	<string name="bye">Bye, Grabadora!</string>
 	<string name="recordButton">GRABAR</string>
-	<string name="recording">Grabando...</string>
-	<string name="stoppedRecording">Grabación parada</string>
+	<string name="stopRecording">Parar grabación</string>
+	<string name="startRecording">Grabar</string>
+	<string name="playButton">Reproducir</string>
+	<string name="stopPlaying">Parar reprodución</string>
+	<string name="startPlaying">Comenzar reprodución</string>
+	<string name="goRecording">Ir a grabación</string>
 </resources>
