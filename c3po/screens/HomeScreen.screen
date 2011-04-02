@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Panel" x="24" y="16" width="320" height="480" measuredWidth="320" measuredHeight="480" background="#0567aa" border="none"/>
+  <widgets xsi:type="model:Panel" x="24" y="40" width="320" height="456" measuredWidth="320" measuredHeight="456" background="#181818" border="none"/>
+  <widgets xsi:type="model:WidgetGroup" x="24" y="16" measuredWidth="320" measuredHeight="25">
+    <widgets xsi:type="model:Panel" width="320" height="25" measuredWidth="320" measuredHeight="25" border="none"/>
+    <widgets xsi:type="model:Label" x="245" width="75" text="8:30 PM" measuredWidth="75" measuredHeight="23" textAlignment="Right">
+      <font bold="true"/>
+    </widgets>
+    <widgets xsi:type="model:Icon" x="229" y="4" measuredWidth="16" measuredHeight="16" icon="battery (small)"/>
+    <widgets xsi:type="model:Icon" x="206" y="4" measuredWidth="16" measuredHeight="16" icon="signal (small)"/>
+  </widgets>
+  <widgets xsi:type="model:Panel" x="24" y="40" width="320" height="25" measuredWidth="320" measuredHeight="25" background="#7d7f7d" border="none"/>
+  <widgets xsi:type="model:Label" x="32" y="40" width="312" text="Inicio" measuredWidth="312" measuredHeight="23" foreground="#ffffff">
+    <font bold="true"/>
+  </widgets>
+  <widgets xsi:type="model:Button" x="112" y="244" width="145" height="44" text="Mis Asignaturas" measuredWidth="145" measuredHeight="44" background="#cacaca">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" x="140" y="146" text="C-3PO" measuredWidth="89" measuredHeight="48" foreground="#ffffff">
+    <font size="22"/>
+  </widgets>
+  <widgets xsi:type="model:Label" x="109" y="187" text="Lorem ipsum dolor sit amet" measuredWidth="151" measuredHeight="23" foreground="#eeeeee">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:WidgetGroup" x="24" y="424" measuredWidth="320" measuredHeight="71">
+    <widgets xsi:type="model:Panel" width="320" height="71" measuredWidth="320" measuredHeight="71" background="#f2f7fb" foreground="#626262"/>
+    <widgets xsi:type="model:WidgetGroup" x="48" y="9" measuredWidth="97" measuredHeight="56">
+      <widgets xsi:type="model:Icon" x="33" measuredWidth="32" measuredHeight="32" icon="options (large)"/>
+      <widgets xsi:type="model:Label" y="33" width="97" text="Preferencias" measuredWidth="97" measuredHeight="23" textAlignment="Center">
+        <font/>
+      </widgets>
+    </widgets>
+    <widgets xsi:type="model:WidgetGroup" x="194" y="8" measuredWidth="97" measuredHeight="56">
+      <widgets xsi:type="model:Icon" x="33" measuredWidth="32" measuredHeight="32" icon="info (large)"/>
+      <widgets xsi:type="model:Label" y="33" width="97" text="Acerca de" measuredWidth="97" measuredHeight="23" textAlignment="Center">
+        <font/>
+      </widgets>
+    </widgets>
+    <widgets xsi:type="model:VLine" x="160" y="1" height="69" measuredWidth="6" measuredHeight="69" foreground="#626262"/>
+  </widgets>
+  <widgets xsi:type="model:Button" x="112" y="304" width="145" height="44" text="Mis Transcripciones" measuredWidth="145" measuredHeight="44" background="#cacaca">
+    <font/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font/>
+</model:Screen>

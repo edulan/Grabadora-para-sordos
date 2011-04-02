@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Panel" x="24" y="16" width="320" height="480" measuredWidth="320" measuredHeight="480" background="#0567aa" border="none"/>
+  <widgets xsi:type="model:WidgetGroup" x="24" y="16" measuredWidth="320" measuredHeight="25">
+    <widgets xsi:type="model:Panel" width="320" height="25" measuredWidth="320" measuredHeight="25" border="none"/>
+    <widgets xsi:type="model:Label" x="245" width="75" text="8:30 PM" measuredWidth="75" measuredHeight="23" textAlignment="Right">
+      <font bold="true"/>
+    </widgets>
+    <widgets xsi:type="model:Icon" x="229" y="4" measuredWidth="16" measuredHeight="16" icon="battery (small)"/>
+    <widgets xsi:type="model:Icon" x="206" y="4" measuredWidth="16" measuredHeight="16" icon="signal (small)"/>
+  </widgets>
+  <widgets xsi:type="model:Panel" x="24" y="40" width="320" height="456" measuredWidth="320" measuredHeight="456" background="#181818" border="none"/>
+  <widgets xsi:type="model:WidgetGroup" x="24" y="40" measuredWidth="320" measuredHeight="25">
+    <widgets xsi:type="model:Panel" width="320" height="25" measuredWidth="320" measuredHeight="25" background="#7d7f7d" border="none"/>
+    <widgets xsi:type="model:Label" x="8" width="312" text="Asignaturas" measuredWidth="312" measuredHeight="23" foreground="#ffffff">
+      <font bold="true"/>
+    </widgets>
+  </widgets>
+  <widgets xsi:type="model:Panel" x="24" y="424" width="320" height="71" measuredWidth="320" measuredHeight="71" background="#f2f7fb" foreground="#626262"/>
+  <widgets xsi:type="model:WidgetGroup" x="121" y="432" measuredWidth="145" measuredHeight="56">
+    <widgets xsi:type="model:Icon" x="57" measuredWidth="32" measuredHeight="32" icon="circled-plus (large)"/>
+    <widgets xsi:type="model:Label" y="33" width="145" text="Crear nueva asignatura" measuredWidth="145" measuredHeight="23" textAlignment="Center">
+      <font/>
+    </widgets>
+  </widgets>
+  <widgets xsi:type="model:WidgetGroup" x="51" y="70" measuredWidth="264" measuredHeight="64">
+    <widgets xsi:type="model:HLine" y="58" width="264" measuredWidth="264" measuredHeight="6" foreground="#adaaad"/>
+    <widgets xsi:type="model:Label" y="6" width="237" text="Biología" measuredWidth="237" measuredHeight="28" foreground="#ffffff">
+      <font size="11" bold="true"/>
+    </widgets>
+    <widgets xsi:type="model:Label" x="2" y="29" text="12 clases" measuredWidth="51" measuredHeight="23" foreground="#999999">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Label" x="247" width="16" text=">" measuredWidth="16" measuredHeight="48" foreground="#eeeeee">
+      <font size="22"/>
+    </widgets>
+  </widgets>
+  <widgets xsi:type="model:WidgetGroup" x="51" y="133" measuredWidth="264" measuredHeight="64">
+    <widgets xsi:type="model:HLine" y="58" width="264" measuredWidth="264" measuredHeight="6" foreground="#adaaad"/>
+    <widgets xsi:type="model:Label" y="6" width="237" text="Biología" measuredWidth="237" measuredHeight="28" foreground="#ffffff">
+      <font size="11" bold="true"/>
+    </widgets>
+    <widgets xsi:type="model:Label" x="2" y="29" text="12 clases" measuredWidth="51" measuredHeight="23" foreground="#999999">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Label" x="247" width="16" text=">" measuredWidth="16" measuredHeight="48" foreground="#eeeeee">
+      <font size="22"/>
+    </widgets>
+  </widgets>
+  <widgets xsi:type="model:WidgetGroup" x="51" y="196" measuredWidth="264" measuredHeight="64">
+    <widgets xsi:type="model:HLine" y="58" width="264" measuredWidth="264" measuredHeight="6" foreground="#adaaad"/>
+    <widgets xsi:type="model:Label" y="6" width="237" text="Biología" measuredWidth="237" measuredHeight="28" foreground="#ffffff">
+      <font size="11" bold="true"/>
+    </widgets>
+    <widgets xsi:type="model:Label" x="2" y="29" text="12 clases" measuredWidth="51" measuredHeight="23" foreground="#999999">
+      <font/>
+    </widgets>
+    <widgets xsi:type="model:Label" x="247" width="16" text=">" measuredWidth="16" measuredHeight="48" foreground="#eeeeee">
+      <font size="22"/>
+    </widgets>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font/>
+</model:Screen>
