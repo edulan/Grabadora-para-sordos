@@ -8,8 +8,8 @@ import es.alltogether.c3po.models.Session;
 import es.alltogether.c3po.models.Subject;
 
 public class DBHelper extends SQLiteOpenHelper {
-	private static final String DATABASE_NAME = "events.db";
-	private static final int DATABASE_VERSION = 3;
+	private static final String DATABASE_NAME = "recorder.db";
+	private static final int DATABASE_VERSION = 1;
 
 	/** Create a helper object for the Events database */
 	public DBHelper(Context ctx) {

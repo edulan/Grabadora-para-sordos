@@ -91,5 +91,4 @@ public class Recording implements BaseColumns {
 	public boolean isSaved() {
 		return id > 0;
 	}
-
 }

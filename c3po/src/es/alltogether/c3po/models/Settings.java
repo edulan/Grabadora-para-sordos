@@ -38,4 +38,8 @@ public class Settings {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
+
+	public boolean isSaved() {
+		return id > 0;
+	}
 }

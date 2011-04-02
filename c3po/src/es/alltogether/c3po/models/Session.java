@@ -83,4 +83,7 @@ public class Session implements BaseColumns {
 		this.subject = subject;
 	}
 
+	public boolean isSaved() {
+		return id > 0;
+	}
 }
