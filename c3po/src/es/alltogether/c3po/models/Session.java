@@ -1,5 +1,6 @@
 package es.alltogether.c3po.models;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +19,7 @@ public class Session implements BaseColumns {
 	private Date date;
 	private String name;
 	private Subject subject = new Subject();
-	private List<Recording> recordings;
+	private List<Recording> recordings = new ArrayList<Recording>();
 
 	public Session(Cursor cursorResources) {
 		setId(cursorResources.getLong(0));

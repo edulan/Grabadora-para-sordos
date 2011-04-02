@@ -6,11 +6,17 @@ import android.app.Activity;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
-import android.os.Environment;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 import es.alltogether.c3po.db.RecordingTable;
 import es.alltogether.c3po.models.Recording;
 import es.alltogether.c3po.models.Session;
@@ -20,35 +26,84 @@ public class RecordDialog extends Activity {
 	private RecordUtility record;
 	private PlayerUtility player;
 	private Session session;
-	private Recording classSession;
+	private Recording recording;
 	private RecordingTable recordingTable;
+	private RecordingAdapter adapter;
 
-	private boolean recording = true;
-	private boolean playing = true;
+	private boolean stateRecording = true;
+	private boolean statePlaying = true;
 	public static final String PREFS_NAME = "SHARED_PREFERENCES";
+
+	private ListView listView;
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
+				.getMenuInfo();
+		recording = session.getRecordings().remove(info.position);
+		recordingTable.delete(recording);
+		adapter.notifyDataSetChanged();
+		Toast
+				.makeText(getApplicationContext(), "Grabación eliminada",
+						Toast.LENGTH_SHORT).show();
+		return true;
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menudeleterecordings, menu);
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.record);
+
 		record = new RecordUtility();
 		player = new PlayerUtility();
 		recordingTable = new RecordingTable(this);
+
+		// FIXME PASAME LA SESION
+		session = new Session();
+		session.setDate(Calendar.getInstance().getTime());
+		session.setId(1l);
+		session.setName("CLASE");
+
+		listView = (ListView) findViewById(R.id.listViewRecord);
+		adapter = new RecordingAdapter(this, R.layout.row, session
+				.getRecordings());
+		listView.setAdapter(adapter);
+		listView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
+					long arg3) {
+				recording = session.getRecordings().get(position);
+				play();
+			}
+		});
+		final Activity myActivity = this;
+		registerForContextMenu(listView);
+
 		OnClickListener clicker = new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Button recordButton = (Button) findViewById(R.id.recordButton);
-				if (recording) {
-					String path = createNewFilePath();
+				if (stateRecording) {
+					String path = FileUtility.createNewFilePath(myActivity);
 					record.startRecording(path);
-					classSession = startClassRecording(path);
+					recording = startClassRecording(path);
 					recordButton.setText(R.string.stopRecording);
 				} else {
 					record.stopRecording();
-					stopClassRecording(classSession);
+					stopClassRecording(recording);
 					recordButton.setText(R.string.startRecording);
+					adapter.notifyDataSetChanged();
 				}
-				recording = !recording;
+				stateRecording = !stateRecording;
 			}
 
 			private void stopClassRecording(Recording recording) {
@@ -77,41 +132,17 @@ public class RecordDialog extends Activity {
 
 	}
 
-	public String createNewFilePath() {
-		boolean externalStorageAvailable = false;
-		boolean externalStorageWriteable = false;
-		String state = Environment.getExternalStorageState();
-
-		if (Environment.MEDIA_MOUNTED.equals(state)) {
-			// We can read and write the media
-			externalStorageAvailable = externalStorageWriteable = true;
-			return Environment.getExternalStoragePublicDirectory(
-					Environment.DIRECTORY_MUSIC).getAbsolutePath()
-					+ "/class"
-					+ Calendar.getInstance().getTimeInMillis()
-					+ ".3gp";
-		} else {
-			// We can only read the media
-			externalStorageAvailable = true;
-			externalStorageWriteable = false;
-			Toast.makeText(this, R.string.storageSpace, Toast.LENGTH_LONG)
-					.show();
-			return getFilesDir().getAbsolutePath();
-		}
-
-	}
-
 	@Override
 	public void onPause() {
 		super.onPause();
-		record.pauseRecorder();
+		// record.pauseRecorder();
 		player.pausePlayer();
 	}
 
 	private void play() {
 		Button playButton = (Button) findViewById(R.id.playButton);
-		if (playing) {
-			player.startPlaying(classSession.getFile());
+		if (statePlaying) {
+			player.startPlaying(recording.getFile());
 			playButton.setText(R.string.stopPlaying);
 			player.getPlayer().setOnCompletionListener(
 					new OnCompletionListener() {
@@ -124,15 +155,15 @@ public class RecordDialog extends Activity {
 			player.stopPlaying();
 			playButton.setText(R.string.startPlaying);
 		}
-		playing = !playing;
+		statePlaying = !statePlaying;
 	}
 
 	public Recording getClassSession() {
-		return classSession;
+		return recording;
 	}
 
 	public void setClassSession(Recording classSession) {
-		this.classSession = classSession;
+		this.recording = classSession;
 	}
 
 }
