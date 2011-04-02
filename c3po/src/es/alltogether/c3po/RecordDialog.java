@@ -1,6 +1,8 @@
 package es.alltogether.c3po;
 
 import android.app.Activity;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -41,16 +43,17 @@ public class RecordDialog extends Activity {
 		recordButton.setOnClickListener(clicker);
 		OnClickListener playClicker = new OnClickListener() {
 			public void onClick(View v) {
-				player.onPlay(playing);
-				Button recordButton = (Button) findViewById(R.id.playButton);
-				if (playing) {
-					recordButton.setText(R.string.stopPlaying);
-				} else {
-					recordButton.setText(R.string.startPlaying);
-				}
-				playing = !playing;
+				play();
 			}
 		};
+		player.getPlayer().setOnCompletionListener(new OnCompletionListener() {
+
+			@Override
+			public void onCompletion(MediaPlayer mp) {
+				//FIXME ERROR CON LA COMPLETITUD
+				play();
+			}
+		});
 		Button playButton = (Button) findViewById(R.id.playButton);
 		playButton.setOnClickListener(playClicker);
 
@@ -63,5 +66,15 @@ public class RecordDialog extends Activity {
 		player.pausePlayer();
 	}
 
-	
+	private void play() {
+		player.onPlay(playing);
+		Button playButton = (Button) findViewById(R.id.playButton);
+		if (playing) {
+			playButton.setText(R.string.stopPlaying);
+		} else {
+			playButton.setText(R.string.startPlaying);
+		}
+		playing = !playing;
+	}
+
 }

@@ -7,7 +7,7 @@ import android.util.Log;
 
 public class PlayerUtility {
 
-	private MediaPlayer player = null;
+	private MediaPlayer player = new MediaPlayer();;
 
 	String path;
 
@@ -24,17 +24,28 @@ public class PlayerUtility {
 	}
 
 	private void startPlaying() {
-		player = new MediaPlayer();
 		try {
+			if (player == null) {
+				player = new MediaPlayer();
+			}
 			player.setDataSource(path);
 			player.prepare();
 			player.start();
+
 		} catch (IOException e) {
 			Log.e("AUDIO_PLAY", "prepare() failed");
 		}
 	}
 
-	private void stopPlaying() {
+	public MediaPlayer getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(MediaPlayer player) {
+		this.player = player;
+	}
+
+	public void stopPlaying() {
 		player.release();
 		player = null;
 	}
