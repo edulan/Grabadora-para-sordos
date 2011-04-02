@@ -3,9 +3,14 @@ package es.alltogether.c3po;
 import java.util.Calendar;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -29,33 +34,14 @@ public class RecordDialog extends Activity {
 	private Recording recording;
 	private RecordingTable recordingTable;
 	private RecordingAdapter adapter;
+	private Handler handler = new Handler();
 
-	private boolean stateRecording = true;
 	private boolean statePlaying = true;
 	public static final String PREFS_NAME = "SHARED_PREFERENCES";
+	private long startTime;
 
 	private ListView listView;
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
-				.getMenuInfo();
-		recording = session.getRecordings().remove(info.position);
-		recordingTable.delete(recording);
-		adapter.notifyDataSetChanged();
-		Toast
-				.makeText(getApplicationContext(), "Grabación eliminada",
-						Toast.LENGTH_SHORT).show();
-		return true;
-	}
-
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.menudeleterecordings, menu);
-	}
+	private AlertDialog alertDialog;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -79,8 +65,8 @@ public class RecordDialog extends Activity {
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int position,
-					long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
 				recording = session.getRecordings().get(position);
 				play();
 			}
@@ -89,21 +75,38 @@ public class RecordDialog extends Activity {
 		registerForContextMenu(listView);
 
 		OnClickListener clicker = new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
-				Button recordButton = (Button) findViewById(R.id.recordButton);
-				if (stateRecording) {
-					String path = FileUtility.createNewFilePath(myActivity);
-					record.startRecording(path);
-					recording = startClassRecording(path);
-					recordButton.setText(R.string.stopRecording);
-				} else {
-					record.stopRecording();
-					stopClassRecording(recording);
-					recordButton.setText(R.string.startRecording);
-					adapter.notifyDataSetChanged();
+				String path = FileUtility.createNewFilePath(myActivity);
+				record.startRecording(path);
+				recording = startClassRecording(path);
+				createDialog(myActivity);
+			}
+
+			private void createDialog(final Activity myActivity) {
+				Builder builder = new AlertDialog.Builder(myActivity);
+				builder.setTitle("Grabación iniciada");
+				builder.setMessage("Grabando... ");
+				builder.setPositiveButton("Terminar",
+						new AlertDialog.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								handler.removeCallbacks(updateTimeTask);
+								startTime = 0;
+								record.stopRecording();
+								stopClassRecording(recording);
+								adapter.notifyDataSetChanged();
+							}
+						});
+				alertDialog = builder.create();
+				if (startTime == 0L) {
+					startTime = System.currentTimeMillis();
+					handler.removeCallbacks(updateTimeTask);
+					handler.postDelayed(updateTimeTask, 100);
 				}
-				stateRecording = !stateRecording;
+				alertDialog.show();
 			}
 
 			private void stopClassRecording(Recording recording) {
@@ -118,6 +121,7 @@ public class RecordDialog extends Activity {
 				classSession.setFile(path);
 				return classSession;
 			}
+
 		};
 		Button recordButton = (Button) findViewById(R.id.recordButton);
 		recordButton.setOnClickListener(clicker);
@@ -158,6 +162,26 @@ public class RecordDialog extends Activity {
 		statePlaying = !statePlaying;
 	}
 
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
+				.getMenuInfo();
+		recording = session.getRecordings().remove(info.position);
+		recordingTable.delete(recording);
+		adapter.notifyDataSetChanged();
+		Toast.makeText(getApplicationContext(), "Grabación eliminada",
+				Toast.LENGTH_SHORT).show();
+		return true;
+	}
+
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.menudeleterecordings, menu);
+	}
+
 	public Recording getClassSession() {
 		return recording;
 	}
@@ -165,5 +189,23 @@ public class RecordDialog extends Activity {
 	public void setClassSession(Recording classSession) {
 		this.recording = classSession;
 	}
+
+	private Runnable updateTimeTask = new Runnable() {
+		public void run() {
+			final long start = startTime;
+			long millis = System.currentTimeMillis() - start;
+			int seconds = (int) (millis / 1000);
+			int minutes = seconds / 60;
+			seconds = seconds % 60;
+			if (seconds < 10) {
+				alertDialog
+						.setMessage("Grabando..." + minutes + ":0" + seconds);
+			} else {
+				alertDialog.setMessage("Grabando..." + minutes + ":" + seconds);
+			}
+
+			handler.postAtTime(this, SystemClock.uptimeMillis() + 500);
+		}
+	};
 
 }
