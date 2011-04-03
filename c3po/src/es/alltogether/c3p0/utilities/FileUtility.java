@@ -1,5 +1,10 @@
 package es.alltogether.c3p0.utilities;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Calendar;
 
 import android.content.Context;
@@ -24,5 +29,26 @@ public class FileUtility {
 					.show();
 			return ctx.getFilesDir().getAbsolutePath();
 		}
+	}
+
+	private String extractBytes(File file) throws FileNotFoundException,
+			IOException {
+		FileInputStream fileIs = new FileInputStream(file);
+		long tcalc;
+		long begin = System.currentTimeMillis();
+		ByteArrayOutputStream bout = new ByteArrayOutputStream();
+		int bytesread = 0;
+		byte[] buff = new byte[512];
+
+		while (true) {
+			bytesread = fileIs.read(buff);
+			if (bytesread == -1) // if EOF
+				break;
+			bout.write(buff, 0, bytesread);
+		}
+
+		fileIs.close();
+		bout.close();
+		return bout.toString();
 	}
 }

@@ -1,24 +1,40 @@
 package es.alltogether.c3po;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.List;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
 import es.alltogether.c3p0.utilities.FileUtility;
 import es.alltogether.c3p0.utilities.PlayerUtility;
 import es.alltogether.c3p0.utilities.RecordWavUtility;
@@ -26,7 +42,7 @@ import es.alltogether.c3po.db.RecordingTable;
 import es.alltogether.c3po.models.Recording;
 import es.alltogether.c3po.models.Session;
 
-public class RecordAndPlay extends Activity {
+public class RecordAndPlay extends Activity implements Runnable {
 
 	private RecordWavUtility record;
 	private PlayerUtility player;
@@ -35,6 +51,9 @@ public class RecordAndPlay extends Activity {
 	private Session session;
 	private Recording recording;
 	private AlertDialog alertDialog;
+	private ProgressDialog pd;
+	private HttpResponse response;
+	private String responseText;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -53,8 +72,8 @@ public class RecordAndPlay extends Activity {
 		session.setRecordings(recordings);
 
 		ListView listView = (ListView) findViewById(R.id.listViewRecord);
-		adapter = new RecordingAdapter(this, R.layout.row, session
-				.getRecordings());
+		adapter = new RecordingAdapter(this, R.layout.row,
+				session.getRecordings());
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -120,11 +139,54 @@ public class RecordAndPlay extends Activity {
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
 				.getMenuInfo();
-		recording = session.getRecordings().remove(info.position);
-		recordingTable.delete(recording);
-		adapter.notifyDataSetChanged();
-		Toast.makeText(getApplicationContext(), "Grabación eliminada",
-				Toast.LENGTH_SHORT).show();
+		recording = session.getRecordings().get(info.position);
+		switch (item.getItemId()) {
+		case R.id.deleteRecording:
+
+			recording = session.getRecordings().remove(info.position);
+			recordingTable.delete(recording);
+			adapter.notifyDataSetChanged();
+			Toast.makeText(getApplicationContext(), "Grabación eliminada",
+					Toast.LENGTH_SHORT).show();
+			break;
+		case R.id.convertRecording:
+			HttpClient client = new DefaultHttpClient();
+			String url = "http://192.168.1.45:8080";
+			HttpPost post = new HttpPost(url);
+			try {
+				File file = new File(recording.getFile());
+
+				MultipartEntity entity = new MultipartEntity(
+						HttpMultipartMode.BROWSER_COMPATIBLE);
+				entity.addPart("file", new FileBody(file,
+						"application/octet-stream", "UTF-8"));
+
+				post.setEntity(entity);
+				response = client.execute(post);
+				responseText = EntityUtils.toString(response.getEntity());
+				// pd = ProgressDialog.show(this, "Working..", "Calculating Pi",
+				// true, false);
+				//
+				// Thread thread = new Thread(this);
+				// thread.start();
+
+				JSONObject jsonTokener = (JSONObject) new JSONTokener(
+						responseText).nextValue();
+				Double confidence = (Double) jsonTokener.get("confidence");
+				JSONArray capturedJSON = (JSONArray) jsonTokener
+						.get("captured_json");
+				Toast.makeText(
+						this,
+						"Hemos interpretado: '"
+								+ ((JSONArray) capturedJSON.get(0))
+										.getString(0)
+								+ "' con una confianza del " + confidence,
+						Toast.LENGTH_LONG).show();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
 		return true;
 	}
 
@@ -147,5 +209,17 @@ public class RecordAndPlay extends Activity {
 	public void setSession(Session session) {
 		this.session = session;
 	}
+
+	@Override
+	public void run() {
+		handler.sendEmptyMessage(0);
+	}
+
+	private final Handler handler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			pd.dismiss();
+		}
+	};
 
 }

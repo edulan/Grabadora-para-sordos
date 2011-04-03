@@ -2,4 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 	<item android:id="@+id/deleteRecording" android:icon="@drawable/icon"
 		android:title="@string/deleteRecording" />
+	<item android:id="@+id/convertRecording" android:icon="@drawable/icon"
+		android:title="@string/convertRecording" />
 </menu>

@@ -18,6 +18,7 @@
 	<string name="storageSpace">No podemos grabar en la SD</string>
 	<string name="listNoItems">No hay grabaciones para esta clase</string>
 	<string name="deleteRecording">Eliminar grabación</string>
+	<string name="convertRecording">Convertir grabación</string>
 	<string name="add_subject_label">Crear nueva asignatura</string>
 	<string name="add_subject_shortcut">a</string>
 	<string name="subject_label">Nombre de la asignatura</string>
