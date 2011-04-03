@@ -24,7 +24,26 @@ public class Subjects extends Activity implements OnItemClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.subject);
+		// Retrieve data from model
+		SubjectTable subjectTable = new SubjectTable(this);
+		subjects = subjectTable.findByCriteria(null);
+		SubjectAdapter adapter = new SubjectAdapter(this, R.layout.subject_row,
+				subjects);
+		ListView listView = (ListView) findViewById(R.id.list_view_subjects);
+		listView.setAdapter(adapter);
+		listView.setOnItemClickListener(this);
+		TextView infoText = (TextView) findViewById(R.id.text_view_info);
 
+		if (!subjects.isEmpty()) {
+			infoText.setVisibility(View.GONE);
+		} else {
+			infoText.setVisibility(View.VISIBLE);
+		}
+	}
+
+	@Override
+	protected void onRestart() {
+		super.onRestart();
 		// Retrieve data from model
 		SubjectTable subjectTable = new SubjectTable(this);
 		subjects = subjectTable.findByCriteria(null);
@@ -55,6 +74,7 @@ public class Subjects extends Activity implements OnItemClickListener {
 		switch (item.getItemId()) {
 		case R.id.add_subject:
 			Intent intent = new Intent(this, SubjectDialog.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 			startActivity(intent);
 			return true;
 		}

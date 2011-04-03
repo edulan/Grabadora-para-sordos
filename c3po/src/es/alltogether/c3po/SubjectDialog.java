@@ -26,6 +26,8 @@ public class SubjectDialog extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+		Intent intent;
+
 		switch (v.getId()) {
 		case R.id.button_save:
 			EditText nameText = (EditText) findViewById(R.id.subject_text);
@@ -36,12 +38,14 @@ public class SubjectDialog extends Activity implements OnClickListener {
 			SubjectTable subjectTable = new SubjectTable(this);
 			subjectTable.save(subject);
 
-			Intent intent = new Intent(this, Subjects.class);
-			startActivity(intent);
+			intent = new Intent();
+			setResult(RESULT_OK, intent);
+			finish();
 			break;
 		case R.id.button_cancel:
-			Intent intent2 = new Intent(this, Subjects.class);
-			startActivity(intent2);
+			intent = new Intent();
+			setResult(RESULT_OK, intent);
+			finish();
 			break;
 		}
 	}

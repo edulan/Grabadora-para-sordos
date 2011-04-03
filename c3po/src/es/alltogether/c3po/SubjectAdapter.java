@@ -45,7 +45,7 @@ public class SubjectAdapter extends ArrayAdapter<Subject> {
 			TextView bottomText = (TextView) convertView
 					.findViewById(R.id.description_text);
 			topText.setText(subject.getName());
-			bottomText.setText(String.valueOf(sessions.size()));
+			bottomText.setText(String.valueOf(sessions.size()) + " sesiones");
 		}
 		return convertView;
 	}
