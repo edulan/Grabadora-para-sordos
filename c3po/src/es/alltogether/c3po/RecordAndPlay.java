@@ -45,12 +45,8 @@ public class RecordAndPlay extends Activity {
 		recordingTable = new RecordingTable(this);
 		final Activity myActivity = this;
 
-		// FIXME PASAME LA SESION
-		session = new Session();
-		session.setDate(Calendar.getInstance().getTime());
-		session.setId(1l);
-		session.setName("CLASE");
-		
+		session = (Session) getIntent().getSerializableExtra("session");
+
 		ListView listView = (ListView) findViewById(R.id.listViewRecord);
 		adapter = new RecordingAdapter(this, R.layout.row, session
 				.getRecordings());
@@ -63,7 +59,8 @@ public class RecordAndPlay extends Activity {
 				recording = session.getRecordings().get(position);
 				play(recording);
 				TimeDialog playingDialog = new TimeDialog();
-				alertDialog = playingDialog.createPlayingDialog((RecordAndPlay) myActivity);
+				alertDialog = playingDialog
+						.createPlayingDialog((RecordAndPlay) myActivity);
 			}
 		});
 
@@ -75,8 +72,8 @@ public class RecordAndPlay extends Activity {
 				String path = FileUtility.createNewFilePath(myActivity);
 				recording = startClassRecording(path);
 				TimeDialog recordingDialog = new TimeDialog();
-				recordingDialog.createRecordingDialog((RecordAndPlay) myActivity,
-						recording);
+				recordingDialog.createRecordingDialog(
+						(RecordAndPlay) myActivity, recording);
 			}
 		};
 		Button recordButton = (Button) findViewById(R.id.recordButton);
@@ -92,11 +89,11 @@ public class RecordAndPlay extends Activity {
 
 	private Recording startClassRecording(String path) {
 		record.startRecording(path);
-		Recording classSession = new Recording();
-		classSession.setStartDate(Calendar.getInstance().getTime());
-		classSession.setSession(session);
-		classSession.setFile(path);
-		return classSession;
+		recording = new Recording();
+		recording.setStartDate(Calendar.getInstance().getTime());
+		recording.setSession(session);
+		recording.setFile(path);
+		return recording;
 	}
 
 	public void play(final Recording recording) {
@@ -134,18 +131,16 @@ public class RecordAndPlay extends Activity {
 		inflater.inflate(R.menu.menudeleterecordings, menu);
 	}
 
-	public Recording getClassSession() {
+	public Recording getRecording() {
 		return recording;
 	}
 
-	public void setClassSession(Recording classSession) {
-		this.recording = classSession;
+	public AlertDialog getAlertDialog() {
+		return alertDialog;
 	}
 
-	@Override
-	public void onPause() {
-		super.onPause();
-		// record.pauseRecorder();
+	public void setSession(Session session) {
+		this.session = session;
 	}
 
 }

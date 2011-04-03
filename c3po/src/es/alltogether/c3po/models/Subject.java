@@ -1,12 +1,18 @@
 package es.alltogether.c3po.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.provider.BaseColumns;
 
-public class Subject implements BaseColumns {
+public class Subject implements BaseColumns, Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public static final String NAME = "name";
 
@@ -53,6 +59,6 @@ public class Subject implements BaseColumns {
 	}
 
 	public boolean isSaved() {
-		return id > 0;
+		return id != null && id > 0;
 	}
 }

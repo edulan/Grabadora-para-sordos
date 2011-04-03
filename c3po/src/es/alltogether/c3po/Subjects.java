@@ -28,9 +28,7 @@ public class Subjects extends Activity implements OnItemClickListener {
 		SubjectTable subjectTable = new SubjectTable(this);
 		List<Subject> subjects = subjectTable.findByCriteria(null);
 
-		Subject s;
-
-		s = new Subject();
+		Subject s = new Subject();
 		s.setName("Biología 1");
 		subjects.add(s);
 		s = new Subject();
@@ -70,7 +68,7 @@ public class Subjects extends Activity implements OnItemClickListener {
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 			long arg3) {
 		// TODO: Create session activity and pass current subject.
-		Intent intent = new Intent(Subjects.this, RecordAndPlay.class);
+		Intent intent = new Intent(Subjects.this, Sessions.class);
 		startActivity(intent);
 	}
 }

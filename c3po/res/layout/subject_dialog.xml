@@ -1,17 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="fill_parent" android:layout_height="fill_parent">
-	<TextView android:text="@string/subject_label"
-		android:layout_width="fill_parent" android:layout_height="wrap_content" />
-	<EditText android:layout_width="fill_parent" android:id="@+id/editSubject"
-		android:layout_height="wrap_content" />
-	<TableLayout android:gravity="bottom" android:orientation="horizontal"
-		android:layout_width="fill_parent" android:layout_height="fill_parent">
-		<TableRow>
-			<Button android:id="@+id/button_save" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:text="@string/save_button_label" />
-			<Button android:id="@+id/button_cancel" android:layout_width="wrap_content"
-				android:layout_height="wrap_content" android:text="@string/cancel_button_label" />
-		</TableRow>
-	</TableLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+	android:layout_width="fill_parent" android:layout_height="wrap_content">
 </LinearLayout>
