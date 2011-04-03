@@ -21,7 +21,7 @@ public class Session implements BaseColumns,Serializable {
 	public static final String SUBJECT_ID = "subject_id";
 
 	private Long id;
-	private Date date;
+	private Date date = new Date();
 	private String name;
 	private Subject subject = new Subject();
 	private List<Recording> recordings = new ArrayList<Recording>();

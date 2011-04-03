@@ -1,6 +1,7 @@
 package es.alltogether.c3po.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.ContentValues;
@@ -18,7 +19,15 @@ public class Subject implements BaseColumns, Serializable {
 
 	private Long id;
 	private String name;
-	private List<Session> sessions;
+	private List<Session> sessions = new ArrayList<Session>();
+
+	public List<Session> getSessions() {
+		return sessions;
+	}
+
+	public void setSessions(List<Session> sessions) {
+		this.sessions = sessions;
+	}
 
 	public Subject(Cursor cursorResources) {
 		setId(cursorResources.getLong(0));
@@ -32,14 +41,6 @@ public class Subject implements BaseColumns, Serializable {
 	}
 
 	public Subject() {
-	}
-
-	public List<Session> getSessions() {
-		return sessions;
-	}
-
-	public void setSessions(List<Session> sessions) {
-		this.sessions = sessions;
 	}
 
 	public Long getId() {

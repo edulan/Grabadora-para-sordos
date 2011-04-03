@@ -20,10 +20,10 @@ public class Recording implements BaseColumns, Serializable {
 	public static final String END_DATE = "end_date";
 	public static final String SESSION_ID = "session_id";
 
-	private Long id = new Long(-1);
+	private Long id;
 	private Date startDate = new Date();
 	private Date endDate = new Date();
-	private String file = new String();
+	private String file;
 	private Session session = new Session();
 
 	public Recording(Cursor cursor) {
