@@ -1,7 +1,5 @@
 package es.alltogether.c3po.models;
 
-import java.util.List;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.provider.BaseColumns;
@@ -10,9 +8,8 @@ public class Subject implements BaseColumns {
 
 	public static final String NAME = "name";
 
-	private Long id;
-	private String name;
-	private List<Session> sessions;
+	private Long id = new Long(-1);
+	private String name = new String();
 
 	public Subject(Cursor cursorResources) {
 		setId(cursorResources.getLong(0));
@@ -26,14 +23,6 @@ public class Subject implements BaseColumns {
 	}
 
 	public Subject() {
-	}
-
-	public List<Session> getSessions() {
-		return sessions;
-	}
-
-	public void setSessions(List<Session> sessions) {
-		this.sessions = sessions;
 	}
 
 	public Long getId() {

@@ -15,9 +15,9 @@ public class Session implements BaseColumns {
 	public static final String NAME = "name";
 	public static final String SUBJECT_ID = "subject_id";
 
-	private Long id;
-	private Date date;
-	private String name;
+	private Long id = new Long(-1);
+	private Date date = new Date();
+	private String name = new String();
 	private Subject subject = new Subject();
 	private List<Recording> recordings = new ArrayList<Recording>();
 
