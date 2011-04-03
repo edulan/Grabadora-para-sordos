@@ -18,7 +18,7 @@ public class FileUtility {
 					.getAbsolutePath()
 					+ "/class"
 					+ Calendar.getInstance().getTimeInMillis()
-					+ ".3gp";
+					+ ".wav";
 		} else {
 			Toast.makeText(ctx, R.string.storageSpace, Toast.LENGTH_LONG)
 					.show();
