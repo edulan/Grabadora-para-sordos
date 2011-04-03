@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import es.alltogether.c3po.db.SessionTable;
+import es.alltogether.c3po.models.Session;
 import es.alltogether.c3po.models.Subject;
 
 public class SubjectAdapter extends ArrayAdapter<Subject> {
@@ -30,15 +32,20 @@ public class SubjectAdapter extends ArrayAdapter<Subject> {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = layoutInflater.inflate(R.layout.subject_row, null);
 		}
-		// Populate view with subject data
+		// Retrieve sessions for subject
 		Subject subject = getItemAtPosition(position);
+		SessionTable sessionTable = new SessionTable(ctx);
+		String[] selectionArgs = { subject.getId().toString() };
+		List<Session> sessions = sessionTable.findByCriteria(Session._ID
+				+ " = ?", selectionArgs);
+		// Populate view with subject data
 		if (subject != null) {
 			TextView topText = (TextView) convertView
 					.findViewById(R.id.top_text);
 			TextView bottomText = (TextView) convertView
 					.findViewById(R.id.description_text);
 			topText.setText(subject.getName());
-			bottomText.setText("12 clases");
+			bottomText.setText(String.valueOf(sessions.size()));
 		}
 		return convertView;
 	}
