@@ -1,5 +1,6 @@
 package es.alltogether.c3po.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -9,15 +10,19 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.provider.BaseColumns;
 
-public class Session implements BaseColumns {
+public class Session implements BaseColumns,Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static final String DATE = "date";
 	public static final String NAME = "name";
 	public static final String SUBJECT_ID = "subject_id";
 
-	private Long id = new Long(-1);
+	private Long id;
 	private Date date = new Date();
-	private String name = new String();
+	private String name;
 	private Subject subject = new Subject();
 	private List<Recording> recordings = new ArrayList<Recording>();
 
@@ -84,6 +89,6 @@ public class Session implements BaseColumns {
 	}
 
 	public boolean isSaved() {
-		return id > 0;
+		return id != null && id > 0;
 	}
 }

@@ -25,7 +25,6 @@ public class Subjects extends Activity implements OnItemClickListener {
 		// Retrieve data from model
 		SubjectTable subjectTable = new SubjectTable(this);
 		List<Subject> subjects = subjectTable.findByCriteria(null);
-		// Create an adapter for subjects list
 		SubjectAdapter adapter = new SubjectAdapter(this, R.layout.subject_row,
 				subjects);
 		ListView listView = (ListView) findViewById(R.id.list_view_subjects);
@@ -55,8 +54,7 @@ public class Subjects extends Activity implements OnItemClickListener {
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int position,
 			long arg3) {
-		// TODO: Create session activity and pass current subject.
-		Intent intent = new Intent(this, RecordAndPlay.class);
+		Intent intent = new Intent(Subjects.this, Sessions.class);
 		startActivity(intent);
 	}
 }

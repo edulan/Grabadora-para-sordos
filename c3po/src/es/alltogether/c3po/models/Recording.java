@@ -1,5 +1,6 @@
 package es.alltogether.c3po.models;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -7,18 +8,22 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.provider.BaseColumns;
 
-public class Recording implements BaseColumns {
+public class Recording implements BaseColumns, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// Table columns
 	public static final String FILE = "file";
 	public static final String START_DATE = "start_date";
 	public static final String END_DATE = "end_date";
 	public static final String SESSION_ID = "session_id";
 
-	private Long id = new Long(-1);
+	private Long id;
 	private Date startDate = new Date();
 	private Date endDate = new Date();
-	private String file = new String();
+	private String file;
 	private Session session = new Session();
 
 	public Recording(Cursor cursor) {

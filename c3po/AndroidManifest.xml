@@ -12,6 +12,7 @@
 		</activity>
 		<activity android:name=".RecordAndPlay" android:label="@string/app_name"></activity>
 		<activity android:name=".Subjects" android:label="@string/subjects_name"></activity>
+		<activity android:name=".Sessions" android:label="@string/sessions_name"></activity>
 		<activity android:name=".SubjectDialog" android:label="@string/subjects_name"></activity>
 	</application>
 	<uses-permission android:name="android.permission.RECORD_AUDIO" />

@@ -3,6 +3,7 @@
 	<string name="hello">Hello World, Grabadora!</string>
 	<string name="app_name">C3PO</string>
 	<string name="subjects_name">Asignaturas</string>
+	<string name="sessions_name">Clases</string>
 	<string name="subject_dialog_name">Añade una asignatura</string>
 	<string name="bye">Bye, Grabadora!</string>
 	<string name="recordButton">GRABAR</string>
