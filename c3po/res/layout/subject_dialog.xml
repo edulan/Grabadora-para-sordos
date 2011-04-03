@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="wrap_content">
-	<TextView android:text="@string/subject_label"
-		android:layout_width="fill_parent" android:layout_height="wrap_content" />
-	<EditText android:layout_width="fill_parent" android:id="@+id/subject_text"
-		android:layout_height="wrap_content" />
+	android:layout_height="wrap_content" android:padding="10dip">
+	<LinearLayout android:orientation="vertical"
+		android:layout_width="fill_parent" android:layout_height="wrap_content">
+		<TextView android:text="@string/subject_label"
+			android:layout_width="fill_parent" android:layout_height="wrap_content" />
+		<EditText android:layout_width="fill_parent" android:id="@+id/subject_text"
+			android:layout_height="wrap_content" />
+	</LinearLayout>
 	<TableLayout android:gravity="bottom" android:orientation="horizontal"
 		android:stretchColumns="*" android:layout_width="fill_parent"
 		android:layout_height="fill_parent" android:padding="10dip">
@@ -16,4 +19,4 @@
 				android:layout_height="wrap_content" android:text="@string/cancel_button_label" />
 		</TableRow>
 	</TableLayout>
-</LinearLayout>
+</RelativeLayout>

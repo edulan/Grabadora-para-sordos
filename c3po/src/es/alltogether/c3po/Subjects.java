@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 import es.alltogether.c3po.db.SubjectTable;
 import es.alltogether.c3po.models.Subject;
 
@@ -30,6 +31,13 @@ public class Subjects extends Activity implements OnItemClickListener {
 		ListView listView = (ListView) findViewById(R.id.list_view_subjects);
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(this);
+		TextView infoText = (TextView) findViewById(R.id.text_view_info);
+
+		if (!subjects.isEmpty()) {
+			infoText.setVisibility(View.GONE);
+		} else {
+			infoText.setVisibility(View.VISIBLE);
+		}
 	}
 
 	@Override
