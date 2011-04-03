@@ -13,10 +13,13 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import es.alltogether.c3po.db.SubjectTable;
 import es.alltogether.c3po.models.Subject;
 
 public class Subjects extends Activity implements OnItemClickListener {
+
+	private static final int SUBJECT_DIALOG_REQUEST_CODE = 1;
 
 	List<Subject> subjects;
 
@@ -42,8 +45,9 @@ public class Subjects extends Activity implements OnItemClickListener {
 	}
 
 	@Override
-	protected void onRestart() {
-		super.onRestart();
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
 		// Retrieve data from model
 		SubjectTable subjectTable = new SubjectTable(this);
 		subjects = subjectTable.findByCriteria(null);
@@ -58,6 +62,11 @@ public class Subjects extends Activity implements OnItemClickListener {
 			infoText.setVisibility(View.GONE);
 		} else {
 			infoText.setVisibility(View.VISIBLE);
+		}
+
+		if (resultCode == RESULT_OK) {
+			Toast.makeText(getApplicationContext(), "Asignatura añadida.",
+					Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -74,8 +83,7 @@ public class Subjects extends Activity implements OnItemClickListener {
 		switch (item.getItemId()) {
 		case R.id.add_subject:
 			Intent intent = new Intent(this, SubjectDialog.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-			startActivity(intent);
+			startActivityForResult(intent, SUBJECT_DIALOG_REQUEST_CODE);
 			return true;
 		}
 		return false;

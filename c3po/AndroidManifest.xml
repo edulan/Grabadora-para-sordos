@@ -13,8 +13,9 @@
 		<activity android:name=".RecordAndPlay" android:label="@string/app_name"></activity>
 		<activity android:name=".Subjects" android:label="@string/subjects_name"></activity>
 		<activity android:name=".Sessions" android:label="@string/sessions_name"></activity>
-		<activity android:name=".SubjectDialog" android:label="@string/subjects_name"></activity>
-		<activity android:name=".SessionDialog" android:label="@string/subjects_name"></activity>
+		<activity android:name=".SubjectDialog" android:label="@string/subjects_name"
+			android:noHistory="true"></activity>
+		<activity android:name=".SessionDialog" android:noHistory="true"></activity>
 	</application>
 	<uses-permission android:name="android.permission.RECORD_AUDIO" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />

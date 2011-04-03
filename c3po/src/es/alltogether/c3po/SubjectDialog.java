@@ -44,7 +44,7 @@ public class SubjectDialog extends Activity implements OnClickListener {
 			break;
 		case R.id.button_cancel:
 			intent = new Intent();
-			setResult(RESULT_OK, intent);
+			setResult(RESULT_CANCELED, intent);
 			finish();
 			break;
 		}

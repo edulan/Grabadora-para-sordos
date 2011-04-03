@@ -35,12 +35,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-import es.alltogether.c3p0.utilities.FileUtility;
-import es.alltogether.c3p0.utilities.PlayerUtility;
-import es.alltogether.c3p0.utilities.RecordWavUtility;
 import es.alltogether.c3po.db.RecordingTable;
 import es.alltogether.c3po.models.Recording;
 import es.alltogether.c3po.models.Session;
+import es.alltogether.c3po.utilities.FileUtility;
+import es.alltogether.c3po.utilities.PlayerUtility;
+import es.alltogether.c3po.utilities.RecordWavUtility;
 
 public class RecordAndPlay extends Activity implements Runnable {
 
