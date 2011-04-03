@@ -17,9 +17,9 @@ public class RecordingTable {
 		dbHelper = new DBHelper(activity);
 	}
 
-	public List<Recording> findByCriteria(String where) {
+	public List<Recording> findByCriteria(String where, String[] strings) {
 		Cursor cursorResources = dbHelper.getReadableDatabase().query(
-				TABLE_NAME, null, where, null, null, null, null);
+				TABLE_NAME, null, where, strings, null, null, null);
 		List<Recording> resources = new ArrayList<Recording>();
 		while (cursorResources.moveToNext()) {
 			resources.add(new Recording(cursorResources));

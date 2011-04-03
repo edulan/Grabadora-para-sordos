@@ -86,6 +86,7 @@ public class Session implements BaseColumns,Serializable {
 
 	public void setSubject(Subject subject) {
 		this.subject = subject;
+		subject.getSessions().add(this);
 	}
 
 	public boolean isSaved() {

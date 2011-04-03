@@ -72,7 +72,7 @@ public class RecordingTableTest extends ActivityInstrumentationTestCase2<Recorde
 		recording.setSession(session);
 		recordingTable.save(recording);
 		// Test method
-		List<Recording> recordings = recordingTable.findByCriteria(null);
+		List<Recording> recordings = recordingTable.findByCriteria(null,null);
 		// Assertions
 		assertTrue(!recordings.isEmpty());
 	}

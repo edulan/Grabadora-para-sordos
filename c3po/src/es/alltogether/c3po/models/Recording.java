@@ -94,6 +94,6 @@ public class Recording implements BaseColumns, Serializable {
 	}
 
 	public boolean isSaved() {
-		return id > 0;
+		return id != null && id > 0;
 	}
 }
