@@ -17,9 +17,9 @@ public class SessionTable {
 		dbHelper = new DBHelper(activity);
 	}
 
-	public List<Session> findByCriteria(String where) {
+	public List<Session> findByCriteria(String where, String[] parameters) {
 		Cursor cursorResources = dbHelper.getReadableDatabase().query(
-				TABLE_NAME, null, where, null, null, null, null);
+				TABLE_NAME, null, where, parameters, null, null, null);
 		List<Session> resources = new ArrayList<Session>();
 		while (cursorResources.moveToNext()) {
 			resources.add(new Session(cursorResources));

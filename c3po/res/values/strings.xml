@@ -19,6 +19,10 @@
 	<string name="add_subject_label">Crear nueva asignatura</string>
 	<string name="add_subject_shortcut">a</string>
 	<string name="subject_label">Nombre de la asignatura</string>
+	<string name="add_session_label">Crear nueva clase</string>
+	<string name="add_session_shortcut">a</string>
+	<string name="session_label">Nombre de la clase</string>
+	<string name="sessionDateLabel">Fecha de la clase</string>
 	<string name="save_button_label">Guardar</string>
 	<string name="cancel_button_label">Cancelar</string>
 

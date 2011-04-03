@@ -1,6 +1,7 @@
 package es.alltogether.c3po;
 
 import java.util.Calendar;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -46,6 +47,9 @@ public class RecordAndPlay extends Activity {
 		final Activity myActivity = this;
 
 		session = (Session) getIntent().getSerializableExtra("session");
+		List<Recording> recordings = recordingTable.findByCriteria("session_id = ?",
+				new String[] { session.getId().toString() });
+		session.setRecordings(recordings);
 
 		ListView listView = (ListView) findViewById(R.id.listViewRecord);
 		adapter = new RecordingAdapter(this, R.layout.row, session

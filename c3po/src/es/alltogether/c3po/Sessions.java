@@ -1,12 +1,12 @@
 package es.alltogether.c3po;
 
-import java.util.Calendar;
 import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,22 +26,12 @@ public class Sessions extends Activity implements OnItemClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.session);
 
-		// Retrieve data from model
 		SessionTable sessionTable = new SessionTable(this);
-		List<Session> sessions = sessionTable.findByCriteria(null);
-		subject = sessions.get(0).getSubject();
-		Session s = new Session();
-		s.setName("Biología 1");
-		s.setDate(Calendar.getInstance().getTime());
-		sessions.add(s);
-		s = new Session();
-		s.setName("Biología 2");
-		s.setDate(Calendar.getInstance().getTime());
-		sessions.add(s);
-		s = new Session();
-		s.setName("Biología 3");
-		s.setDate(Calendar.getInstance().getTime());
-		sessions.add(s);
+		subject = (Subject) getIntent().getSerializableExtra("subject");
+
+		List<Session> sessions = sessionTable.findByCriteria("subject_id = ?",
+				new String[] { subject.getId().toString() });
+		subject.setSessions(sessions);
 
 		SessionAdapter adapter = new SessionAdapter(this, R.layout.subject_row,
 				sessions);
@@ -53,12 +43,22 @@ public class Sessions extends Activity implements OnItemClickListener {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.session_menu, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		return true;
+		switch (item.getItemId()) {
+		case R.id.add_session:
+			Intent intent = new Intent(this, SessionDialog.class);
+			intent.putExtra("subject", subject);
+			startActivity(intent);
+			return true;
+		}
+		return false;
 	}
 
 	@Override
