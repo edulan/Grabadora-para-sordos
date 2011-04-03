@@ -21,14 +21,14 @@ import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import es.alltogether.c3p0.utilities.FileUtility;
 import es.alltogether.c3p0.utilities.PlayerUtility;
-import es.alltogether.c3p0.utilities.RecordUtility;
+import es.alltogether.c3p0.utilities.RecordWavUtility;
 import es.alltogether.c3po.db.RecordingTable;
 import es.alltogether.c3po.models.Recording;
 import es.alltogether.c3po.models.Session;
 
 public class RecordAndPlay extends Activity {
 
-	private RecordUtility record;
+	private RecordWavUtility record;
 	private PlayerUtility player;
 	private RecordingTable recordingTable;
 	private RecordingAdapter adapter;
@@ -41,14 +41,15 @@ public class RecordAndPlay extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.record);
 
-		record = new RecordUtility();
+		// record = new RecordUtility();
+		record = new RecordWavUtility();
 		player = new PlayerUtility();
 		recordingTable = new RecordingTable(this);
 		final Activity myActivity = this;
 
 		session = (Session) getIntent().getSerializableExtra("session");
-		List<Recording> recordings = recordingTable.findByCriteria("session_id = ?",
-				new String[] { session.getId().toString() });
+		List<Recording> recordings = recordingTable.findByCriteria(
+				"session_id = ?", new String[] { session.getId().toString() });
 		session.setRecordings(recordings);
 
 		ListView listView = (ListView) findViewById(R.id.listViewRecord);
