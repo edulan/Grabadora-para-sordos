@@ -1,12 +1,12 @@
 package es.alltogether.c3po;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.ParseException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
@@ -24,6 +24,7 @@ import android.app.ProgressDialog;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.view.ContextMenu;
@@ -166,23 +167,30 @@ public class RecordAndPlay extends Activity implements Runnable {
 				post.setEntity(entity);
 				response = client.execute(post);
 				responseText = EntityUtils.toString(response.getEntity());
-//				pd = ProgressDialog.show(this, "Working..", "Calculating Pi",
-//						true, false);
-//
-//				Thread thread = new Thread(this);
-//				thread.start();
+				// pd = ProgressDialog.show(this, "Working..", "Calculating Pi",
+				// true, false);
+				//
+				// Thread thread = new Thread(this);
+				// thread.start();
 
 				JSONObject jsonTokener = (JSONObject) new JSONTokener(
 						responseText).nextValue();
 				Double confidence = (Double) jsonTokener.get("confidence");
 				JSONArray capturedJSON = (JSONArray) jsonTokener
 						.get("captured_json");
-				Toast.makeText(
-						this,
-						"Hemos interpretado: '"
-								+ ((JSONArray) capturedJSON.get(0))
-										.getString(0)
-								+ "' con una confianza del " + confidence,
+				File textFile = new File(this.getExternalFilesDir(
+						Environment.DIRECTORY_MUSIC).getAbsolutePath()
+						+ "trancription.txt");
+				FileWriter outFile = new FileWriter(textFile);
+				PrintWriter out = new PrintWriter(outFile);
+				String text = "Hemos interpretado: '"
+						+ ((JSONArray) capturedJSON.get(0)).getString(0) + "'";
+				String confidenceText = "con una confianza del "
+						+ confidence.toString();
+				out.println(text);
+				out.println(confidenceText);
+				Toast.makeText(this,
+						text + confidenceText + " y exportado a un fichero",
 						Toast.LENGTH_LONG).show();
 			} catch (Exception e) {
 				e.printStackTrace();
