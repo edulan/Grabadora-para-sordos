@@ -1,8 +1,11 @@
 package es.alltogether.c3po;
 
 import java.io.File;
+<<<<<<< HEAD
 import java.io.FileWriter;
 import java.io.PrintWriter;
+=======
+>>>>>>> e068fd1e889986d809555deb62092d6dde5281c8
 import java.util.Calendar;
 import java.util.List;
 

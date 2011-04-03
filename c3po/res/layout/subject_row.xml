@@ -6,11 +6,11 @@
 		android:layout_width="0dip" android:layout_weight="1"
 		android:layout_height="fill_parent">
 		<TextView android:id="@+id/top_text" android:layout_width="fill_parent"
-			android:layout_height="0dip" android:layout_weight="1"
+			android:layout_height="wrap_content" android:layout_weight="1" android:textSize="22sp"
 			android:gravity="center_vertical" />
 		<TextView android:layout_width="fill_parent"
-			android:layout_height="0dip" android:layout_weight="1"
-			android:id="@+id/description_text" android:singleLine="true"
-			android:ellipsize="marquee" />
+	android:layout_height="wrap_content" android:layout_weight="1"
+	android:id="@+id/description_text" android:singleLine="true"
+	android:ellipsize="marquee" android:textSize="14sp" />
 	</LinearLayout>
 </LinearLayout>

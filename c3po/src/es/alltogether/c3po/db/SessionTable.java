@@ -3,7 +3,7 @@ package es.alltogether.c3po.db;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
+import android.content.Context;
 import android.database.Cursor;
 import es.alltogether.c3po.models.Session;
 
@@ -13,8 +13,8 @@ public class SessionTable {
 
 	DBHelper dbHelper;
 
-	public SessionTable(Activity activity) {
-		dbHelper = new DBHelper(activity);
+	public SessionTable(Context ctx) {
+		dbHelper = new DBHelper(ctx);
 	}
 
 	public List<Session> findByCriteria(String where, String[] parameters) {

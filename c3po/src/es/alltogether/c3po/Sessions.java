@@ -10,8 +10,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
 import es.alltogether.c3po.db.SessionTable;
 import es.alltogether.c3po.models.Session;
 import es.alltogether.c3po.models.Subject;
@@ -26,9 +26,8 @@ public class Sessions extends Activity implements OnItemClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.session);
 
-		SessionTable sessionTable = new SessionTable(this);
 		subject = (Subject) getIntent().getSerializableExtra("subject");
-
+		SessionTable sessionTable = new SessionTable(this);
 		List<Session> sessions = sessionTable.findByCriteria("subject_id = ?",
 				new String[] { subject.getId().toString() });
 		subject.setSessions(sessions);

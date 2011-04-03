@@ -12,7 +12,9 @@
 	<string name="playButton">Reproducir</string>
 	<string name="stopPlaying">Parar reprodución</string>
 	<string name="startPlaying">Comenzar reprodución</string>
-	<string name="goRecording">Ir a grabación</string>
+	<string name="recordings_title_label">C-3PO</string>
+	<string name="recordings_description_label">tu ayudante personal para tus clases</string>
+	<string name="recordings_label">ir a mis grabaciones</string>
 	<string name="storageSpace">No podemos grabar en la SD</string>
 	<string name="listNoItems">No hay grabaciones para esta clase</string>
 	<string name="deleteRecording">Eliminar grabación</string>
@@ -20,11 +22,13 @@
 	<string name="add_subject_label">Crear nueva asignatura</string>
 	<string name="add_subject_shortcut">a</string>
 	<string name="subject_label">Nombre de la asignatura</string>
+	<string name="subject_info_label">Sin asignaturas</string>
 	<string name="add_session_label">Crear nueva clase</string>
 	<string name="add_session_shortcut">a</string>
 	<string name="session_label">Nombre de la clase</string>
 	<string name="sessionDateLabel">Fecha de la clase</string>
 	<string name="save_button_label">Guardar</string>
 	<string name="cancel_button_label">Cancelar</string>
-
+	<string name="title_label">C-3PO</string>
+	<string name="description_label">Lorem ipsum</string>
 </resources>
